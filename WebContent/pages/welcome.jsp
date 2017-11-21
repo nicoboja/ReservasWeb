@@ -15,9 +15,6 @@
 <br>
 <br>
 <h1>Bienvenido <%=((Persona)session.getAttribute("user")) %></h1>
-
-<br>
-<br>
 <br>
 <br>
 <br>
