@@ -1,3 +1,5 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="entity.Persona"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -10,10 +12,9 @@
 </head>
 <body>
 <%@include file="../jspf/nav.jsp"%>
-
 <br>
 <br>
-<h1>PAGINA PRINCIPAL</h1>
+<h1>Bienvenido <%=((Persona)session.getAttribute("user")) %></h1>
 
 <br>
 <br>

@@ -11,8 +11,9 @@ import controlers.CtrlABMPersona;
 import entity.Persona;
 
 /**
- * Servlet implementation class start
+ * Servlet implementation class login
  */
+
 @WebServlet({"/login, /Login"})
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -53,7 +54,7 @@ public class Login extends HttpServlet {
 			
 			request.getSession().setAttribute("user", pers);
 			
-			request.getRequestDispatcher("WEB-INF/welcome.jsp").forward(request, response);
+			request.getRequestDispatcher("pages/welcome.jsp").forward(request, response);
 			//response.getWriter().append(user).append(" ").append(pass);
 			
 			
