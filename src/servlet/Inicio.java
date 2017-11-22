@@ -11,16 +11,16 @@ import controlers.CtrlABMPersona;
 import entity.Persona;
 
 /**
- * Servlet implementation class Login
+ * Servlet implementation class Inicio
  */
-@WebServlet({ "/Login.jsp", "/login.jsp" })
-public class Login extends HttpServlet {
+@WebServlet({ "/Inicio", "/inicio" })
+public class Inicio extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Login() {
+    public Inicio() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,26 +37,29 @@ public class Login extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		
 		try {
 			String user=request.getParameter("user");
 			String pass=request.getParameter("pass");
 			
 			Persona per=new Persona();
+			Persona pers=new Persona();
 			per.setUss(user);
 			per.setPass(pass);
 			
 			CtrlABMPersona ctrl= new CtrlABMPersona();
+			try {
+				pers=ctrl.login(per);
+				request.setAttribute("listaPersonas", ctrl.getAll());
+				request.getSession().setAttribute("persona", pers);
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			System.out.println("DO POST!!");
 			
-			int pers=ctrl.logueo(per);
-			
-			request.setAttribute("listaPersonas", ctrl.getAll());
-			
-			request.getSession().setAttribute("user", pers);
-			
-			request.getRequestDispatcher("pages/welcome.jsp").forward(request, response);
-			//response.getWriter().append(user).append(" ").append(pass);
-			
+			request.getRequestDispatcher("/pages/principal.jsp").forward(request, response);
+		
 			
 		} catch (Exception e) {
 			e.printStackTrace();

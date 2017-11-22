@@ -28,27 +28,10 @@ public class CtrlABMPersona {
 	public void delete(Persona p)throws Exception{
 		dataPer.remove(p);		
 	}
-	
-	public int logueo(Persona p) throws Exception{
-		int rta = -1;
-		Persona pdata = new Persona();
-		pdata = this.getByUss(p);
-		
-	/*	System.out.println(pdata.getUss()+" "+pdata.getPass()+" de BD");
-		System.out.println(p.getUss()+" "+p.getPass()+" de mapeo");
-		*/
-		if(pdata.equalsUss(p)){
-			rta = pdata.getId();
-			System.out.println("VERDADERO");
-			
-		
-		}
-		
-		return rta;
-		
-		
+	public Persona login(Persona per) throws Exception{
+		return dataPer.getLogedUser(per);
 	}
-
+	
 	
 	public Persona getByUss(Persona p) throws Exception{
 		return dataPer.getByUss(p);

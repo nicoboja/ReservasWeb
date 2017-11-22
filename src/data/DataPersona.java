@@ -198,6 +198,43 @@ public class DataPersona {
 			e.printStackTrace();
 		}
 	}
+
+	public Persona getLogedUser(Persona per) throws Exception{
+		Persona p=null;
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		try {
+			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
+					"SELECT p.idP, nombre, apellido, dni, habilitado, contra, usuario, p.idC, nivel from persona p inner join categoria c on p.idC=c.idC where usuario=? and contra=?");
+			stmt.setString(1, per.getUss());
+			stmt.setString(2, per.getPass());
+			rs=stmt.executeQuery();
+			if(rs!=null && rs.next()){
+					p=new Persona();
+					p.setCategoria(new Categoria());
+					p.setId(rs.getInt("idP"));
+					p.setNombre(rs.getString("nombre"));
+					p.setApellido(rs.getString("apellido"));
+					p.setDni(rs.getString("dni"));
+					p.setHabilitado(rs.getBoolean("habilitado"));
+					p.getCategoria().setId(rs.getInt("idC"));
+					p.getCategoria().setDescripcion(rs.getString("nivel"));
+					
+			}
+			
+		} catch (Exception e) {
+			throw e;
+		} finally{
+			try {
+				if(rs!=null)rs.close();
+				if(stmt!=null)stmt.close();
+				FactoryConexion.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				throw e;
+			}
+		}
+		return p;
+	}
 	
 	
 
