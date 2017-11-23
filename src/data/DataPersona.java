@@ -203,6 +203,7 @@ public class DataPersona {
 		Persona p=null;
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
+		System.out.println(per.getUss()+" HOLA "+per.getPass());
 		try {
 			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
 					"SELECT p.idP, nombre, apellido, dni, habilitado, contra, usuario, p.idC, nivel from persona p inner join categoria c on p.idC=c.idC where usuario=? and contra=?");

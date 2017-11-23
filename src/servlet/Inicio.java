@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import controlers.CtrlABMPersona;
+import controlers.CtrlABMReserva;
 import entity.Persona;
 
 /**
@@ -38,27 +39,37 @@ public class Inicio extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		String pagina = "/pages/principal.jsp";
 		try {
 			String user=request.getParameter("user");
 			String pass=request.getParameter("pass");
 			
 			Persona per=new Persona();
 			Persona pers=new Persona();
+			pers= null;
 			per.setUss(user);
 			per.setPass(pass);
 			
-			CtrlABMPersona ctrl= new CtrlABMPersona();
+			CtrlABMPersona ctrlPer= new CtrlABMPersona();
+			CtrlABMReserva ctrlRes = new CtrlABMReserva();
 			try {
-				pers=ctrl.login(per);
-				request.setAttribute("listaPersonas", ctrl.getAll());
+				pers=ctrlPer.login(per);
+				if (pers == null) {
+				pagina = "/pages/login.jsp";
+													
+				}else{
+				request.setAttribute("listaPersonas", ctrlPer.getAll());
 				request.getSession().setAttribute("persona", pers);
+				request.getSession().setAttribute("reservaspen", ctrlRes.getById(pers.getId()));
 				
+				System.out.println(pers.getApellido());
+				}
 			} catch (Exception e) {
-				// TODO: handle exception
+				// TODO: handle exception ERROR EN LA BD
 			}
-			System.out.println("DO POST!!");
+			System.out.println("###########################");
 			
-			request.getRequestDispatcher("/pages/principal.jsp").forward(request, response);
+			request.getRequestDispatcher(pagina).forward(request, response);
 		
 			
 		} catch (Exception e) {

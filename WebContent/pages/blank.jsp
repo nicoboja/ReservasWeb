@@ -5,11 +5,11 @@
 <head>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<%@include file="../jspf/meta.jsp"%>
+<%@include file="/pages/meta.jsp"%>
 <title>Sistema de Reservas</title>
 </head>
 <body>
-<%@include file="../jspf/nav.jsp"%>
+<%@include file="/pages/nav.jsp"%>
 Contenido!
 
 
@@ -23,4 +23,4 @@ Contenido!
 <br>
 <br>
 <br>
-<%@include file="../jspf/foot.jsp"%>
+<%@include file="/pages/foot.jsp"%>

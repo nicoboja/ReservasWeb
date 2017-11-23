@@ -38,6 +38,7 @@
            
             <li class="nav-item">
               <a class="nav-link" href="#">Cerrar Sesion</a>
+              <a href="/ReservasWeb/Logout" class="btn btn-danger square-btn-adjust">Cerrar Sesión</a>
             </li>
           </ul>
         </div>
