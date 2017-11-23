@@ -50,7 +50,7 @@ public class Logout extends HttpServlet {
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		HttpSession log = request.getSession();
         log.invalidate();
-        String pagina="/index.jsp";
+        String pagina="/login.html";
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(pagina);
         dispatcher.forward(request, response); 
 	}

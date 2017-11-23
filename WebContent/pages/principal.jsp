@@ -1,4 +1,5 @@
 <%@page import="entity.Persona"%>
+<%@page import="entity.Reserva"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -19,39 +20,68 @@
 <!-- Page Content -->
 <div class="container">
 	<!-- Page Heading/Breadcrumbs -->
-      <h2 class="mt-4 mb-3">Inicio |
-        <small><%=((Persona)session.getAttribute("persona")).getNombre()%> <%=((Persona)session.getAttribute("persona")).getApellido()%></small>
+      <h2 class="mt-4 mb-3">Usuario:   
+        <small><%=((Persona)session.getAttribute("persona")).getUss()%> </small>
       </h2>
-      
+    <hr>
 	<div class="row">
-        <div class="col-lg-4 mb-4">
+        <div class="col-lg-8 mb-8">
           <div class="card h-100">
             <h4 class="card-header">Reservas Pendientes</h4>
             <div class="card-body">
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente esse necessitatibus neque.</p>
+             	<table class="table table-hover">
+            		<thead>
+            			<tr>
+            				 <th>#</th>
+            				 <th>Fecha</th> 
+            				 <th>Hora</th> 
+            				 <th>Elemento</th> 
+            				 <th>Estado</th>
+            			</tr>
+            		</thead> 
+            		<tbody> 
+            			<tr> 
+            				<th scope="row">1</th> 
+            				<td><%=((Reserva)session.getAttribute("respend"))%></td> 
+            				<td>Otto</td> 
+            				<td>@mdo</td>
+            				<td>bbb</td> 
+            				</tr> 
+            			<tr>
+            				<th scope="row">2</th> 
+            				<td>Jacob</td> 
+            				<td>Thornton</td>
+            				<td>@fat</td> 
+            				<td></td>
+            			</tr> 
+            		 </tbody> 
+            		</table>
             </div>
             <div class="card-footer">
-              <a href="#" class="btn btn-primary">Learn More</a>
+              <a href="#" class="btn btn-success btn-block">Modificar Reservas</a>
             </div>
           </div>
         </div>
-        <div class="col-lg-6 mb-6">
+        <div class="col-lg-4 mb-4">
           <div class="card h-100">
-            <h4 class="card-header">Historial de Reservas</h4>
+            <h4 class="card-header">Datos Personales</h4>
             <div class="card-body">
-              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis ipsam eos, nam perspiciatis natus commodi similique totam consectetur praesentium molestiae atque exercitationem ut consequuntur, sed eveniet, magni nostrum sint fuga.</p>
+            	<ul>
+  					<li>Nombre: <%=((Persona)session.getAttribute("persona")).getNombre()%></li>
+  					<li>Apellido: <%=((Persona)session.getAttribute("persona")).getApellido()%></li>
+  					<li>Categoria: <%=((Persona)session.getAttribute("persona")).getCategoria().getDescripcion()%></li>
+  					<li>DNI: <%=((Persona)session.getAttribute("persona")).getDni()%></li>
+  				</ul> 
             </div>
             <div class="card-footer">
-              <a href="#" class="btn btn-primary">Learn More</a>
+              <a href="#" class="btn btn-warning btn-block ">Modificar</a>
             </div>
           </div>
         </div>
+     </div>
+  </div>
 
 
-<br>
-<br>
-<br>
-<br>
 <br>
 <br>
 <%@include file="/pages/foot.jsp"%>

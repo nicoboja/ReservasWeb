@@ -60,7 +60,7 @@ public class Inicio extends HttpServlet {
 				}else{
 				request.setAttribute("listaPersonas", ctrlPer.getAll());
 				request.getSession().setAttribute("persona", pers);
-				request.getSession().setAttribute("reservaspen", ctrlRes.getById(pers.getId()));
+				request.getSession().setAttribute("respend", ctrlRes.getById(pers.getId()));
 				
 				System.out.println(pers.getApellido());
 				}
