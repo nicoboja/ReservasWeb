@@ -31,7 +31,12 @@ public class Inicio extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		String pagina = "/pages/principal.jsp";
+		//if (request.) {
+	//		System.out.println("SESION NUEVA!");
+			
+	//	}
 	}
 
 	/**
@@ -58,11 +63,12 @@ public class Inicio extends HttpServlet {
 				pagina = "/pages/login.jsp";
 													
 				}else{
-				request.setAttribute("listaPersonas", ctrlPer.getAll());
-				request.getSession().setAttribute("persona", pers);
-				request.getSession().setAttribute("respend", ctrlRes.getById(pers.getId()));
+					System.out.println(pers.getId());
+					request.setAttribute("respend", ctrlRes.getById(pers.getId()));
+					request.getSession().setAttribute("persona", pers);
+					//request.getSession().setAttribute("respend", ctrlRes.getById(pers.getId()));
 				
-				System.out.println(pers.getApellido());
+					System.out.println(pers.getApellido());
 				}
 			} catch (Exception e) {
 				// TODO: handle exception ERROR EN LA BD

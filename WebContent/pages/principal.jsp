@@ -9,6 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <link href="config/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+<link href="config/bootstrap/css/bootstrap2.css" rel="stylesheet" media="screen">
 <link href="config/css/modern-business.css" rel="stylesheet" media="screen">
 
 <title>Sistema de Reservas</title>
@@ -19,41 +20,49 @@
 
 <!-- Page Content -->
 <div class="container">
+
 	<!-- Page Heading/Breadcrumbs -->
       <h2 class="mt-4 mb-3">Usuario:   
         <small><%=((Persona)session.getAttribute("persona")).getUss()%> </small>
       </h2>
     <hr>
+    
 	<div class="row">
         <div class="col-lg-8 mb-8">
           <div class="card h-100">
             <h4 class="card-header">Reservas Pendientes</h4>
             <div class="card-body">
-             	<table class="table table-hover">
+             	<table class="table table-hover ">
             		<thead>
             			<tr>
-            				 <th>#</th>
+            				 <th>ID</th>
             				 <th>Fecha</th> 
             				 <th>Hora</th> 
             				 <th>Elemento</th> 
             				 <th>Estado</th>
+            				 <th></th>
             			</tr>
             		</thead> 
             		<tbody> 
-            			<tr> 
-            				<th scope="row">1</th> 
-            				<td><%=((Reserva)session.getAttribute("respend"))%></td> 
-            				<td>Otto</td> 
-            				<td>@mdo</td>
-            				<td>bbb</td> 
-            				</tr> 
-            			<tr>
-            				<th scope="row">2</th> 
-            				<td>Jacob</td> 
-            				<td>Thornton</td>
-            				<td>@fat</td> 
-            				<td></td>
+            		<% 
+            		ArrayList<Reserva> listaRes = (ArrayList<Reserva>)request.getAttribute("respend");
+            		int i = 0;   
+            		for(Reserva r : listaRes){
+            		%>
+            			<tr <%if(r.getEstado().equals("Cancelado")){%>
+            				class="warning" 
+            				<%}%>> 
+            				<th scope="row"><%=r.getId()%></th> 
+            				<td><%=r.getFecha()%></td> 
+            				<td><%=r.getHora()%></td> 
+            				<td ><%=r.getHora()%></td>
+            				<td><%=r.getEstado() %></td>
+            				<td><%if(!r.getEstado().equals("Cancelado")){%>
+            				<button type="button" class="btn btn-outline btn-warning btn-xs">Cancelar</button>
+            				<%}%></td>
             			</tr> 
+            			<%} %>
+            			
             		 </tbody> 
             		</table>
             </div>
