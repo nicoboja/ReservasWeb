@@ -22,7 +22,7 @@ public class DataPersona {
 		try {
 			stmt = FactoryConexion.getInstancia()
 					.getConn().createStatement();
-			rs = stmt.executeQuery("select * from persona p inner join categoria c on p.idC=c.idC");
+			rs = stmt.executeQuery("select * from persona p inner join categoria c on p.idC=c.idC ORDER BY p.dni ASC");
 			if(rs!=null){
 				while(rs.next()){
 					Persona p=new Persona();
@@ -30,6 +30,7 @@ public class DataPersona {
 					p.setId(rs.getInt("idP"));
 					p.setNombre(rs.getString("nombre"));
 					p.setApellido(rs.getString("apellido"));
+					p.setUss(rs.getString("usuario"));
 					p.setDni(rs.getString("dni"));
 					p.setHabilitado(rs.getBoolean("habilitado"));
 					p.getCategoria().setId(rs.getInt("idC"));

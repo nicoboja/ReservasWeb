@@ -20,13 +20,13 @@
 
 <!-- Page Content -->
 <div class="container">
-
-	<!-- Page Heading/Breadcrumbs -->
+<!-- Page Heading/Breadcrumbs -->
       <h2 class="mt-4 mb-3">Usuario:   
         <small><%=((Persona)session.getAttribute("persona")).getUss()%> </small>
       </h2>
     <hr>
-    
+</div>
+<div class="container">   
 	<div class="row">
         <div class="col-lg-8 mb-8">
           <div class="card h-100">

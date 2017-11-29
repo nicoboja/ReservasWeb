@@ -12,8 +12,8 @@
                 Persona
               </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-                <a class="dropdown-item" href="#">Gestion de Personas</a>
-                <a class="dropdown-item" href="#">Listado de Personas</a>
+                <a class="dropdown-item" href="/ReservasWeb/Gestiona/buscar_persona">Gestion de Personas</a>
+                <a class="dropdown-item" href="/ReservasWeb/Gestiona/listado_persona">Listado de Personas</a>
               </div>
             </li>
             <li class="nav-item dropdown">
