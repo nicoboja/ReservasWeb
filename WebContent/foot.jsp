@@ -7,9 +7,5 @@
     </footer>
 
     <!-- Bootstrap core JavaScript -->
-    <script src="config/jquery/jquery.min.js"></script>
-    <script src="config/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  </body>
-
-</html>
+    <script src="../config/jquery/jquery.min.js"></script>
+    <script src="../config/bootstrap/js/bootstrap.bundle.min.js"></script>
