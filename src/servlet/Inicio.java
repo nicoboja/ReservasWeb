@@ -36,6 +36,8 @@ public class Inicio extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String pagina = "/index.jsp";
+		request.getSession().getAttribute("usuario");
+		request.getSession().getAttribute("listares");
 		request.getRequestDispatcher(pagina).forward(request, response);
 		
 	}

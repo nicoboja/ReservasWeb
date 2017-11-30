@@ -14,6 +14,7 @@
 <title>Sistema de Reservas</title>
 </head>
 <body>
+<%@include file="/nav.jsp"%>
 <!-- Page Content -->
 <div class="container">
 <!-- Page Heading/Breadcrumbs -->
@@ -84,7 +85,7 @@
   </div>
 
 
-<%@include file="/nav.jsp"%>
+
 <%@include file="/foot.jsp"%>
 </body>
 

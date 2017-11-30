@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>Sistema de Reservas</title>
 <script>
-<% if (request.getAttribute("uss")==null) { request.getSession().setAttribute("error", null);%> 
+<% if (request.getSession().getAttribute("uss")==null) { request.getSession().setAttribute("error", null);%> 
     window.location.href = "/ReservasWeb/login.jsp"
 <%}else{%>
 	window.location.href = "/ReservasWeb/home.jsp"
