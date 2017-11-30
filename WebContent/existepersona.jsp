@@ -1,4 +1,5 @@
-<div class="col-lg-6">
+ 	<form class="form-persona" name="dni" action="Persona" method="post">
+                  <div class="col-lg-6">
                 		<div class="form-group">
                           <label>DNI</label>
                           	<input class="form-control" type="number"  name="dni" id="dni" disabled="" value="<%=((Persona)session.getAttribute("existedni")).getDni()%>">
@@ -42,9 +43,9 @@
 					</div>
 					<div class="form-group">
 					<br>
-						<button class="btn btn-warning btn-block" >Modificar</button>
+						<button class="btn btn-warning btn-block" type="submit" >Modificar</button>
 					</div>
-			
+				</form>
 		</div><!-- DiV 6 -->
 		
 					

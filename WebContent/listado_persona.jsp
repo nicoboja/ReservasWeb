@@ -21,91 +21,105 @@
 
 <div class="container">   
 	<div class="row">
-	<div class="col-lg-6">
+	 <div class="col-lg-6">
 			<div class="panel panel-default">
 	        <div class="panel-heading">Busqueda Persona</div>
            		 <div class="panel-body">
-                    <div class="row">
+                  <div class="row">
+                    <!--Form-->
                     <form class="form-persona" name="dni" action="Persona" method="get">
-                        	 <div class="col-lg-6">
+                        <div class="col-lg-6">
                         	 	<label>Ingrese DNI</label>
-        	           		 	<div class="input-group">
+        	           		    <div class="input-group">
                        		 		<input class="form-control input-sm" type="number"  name="dni" id="dni" autofocus>
                            			<span class="input-group-btn">
-                           			<button type="submit" class="btn btn-info btn-sm">Buscar</button>  </a>	
+                           			  <button type="submit" class="btn btn-info btn-sm">Buscar</button>	
                            			</span>
-                          		 </div>
-                          	 </div>
+                          	</div>
+                        </div>
                      </form>
-                     <%if(session.getAttribute("existedni")!=null){%>
-                    	<%@ include file="/existepersona.jsp" %>
-                   	<%  } %>
-                     <%if(session.getAttribute("nuevodni")!=null){%>
-                    	<%@ include file="/nuevapersona.jsp" %>
-                   <%  } %>
-                   <%if(session.getAttribute("existedni")==null&&session.getAttribute("nuevodni")==null){%>
-                    	
-                	<div class="col-lg-6">
-                		<div class="form-group">
-                          <label>DNI</label>
-                          	<input class="form-control" type="number"  name="dni" id="dni" disabled="" >
-                          	
-                        </div>
-                        <div class="form-group">
-                          <label>Nombre</label>
-                          	<input class="form-control" type="text" name="nombre" id="nombre" disabled="" >
-                        </div>
-                        <div class="form-group">
-                          <label>Apellido</label>
-                          	<input class="form-control" type="text" name="apellido" id="apellido" disabled="" >
-                        </div>
-                        <div class="form-group">
-                          	<label>Estado</label>
-                            	<div class="checkbox" disabled="">
-                                   <label>
-                                     <input type="checkbox" value="admin" disabled="">Habilitado
-                                   </label>
-                                </div>
-                                </div>
-                    </div>
-                    <div class="col-lg-6">
-                		<div class="form-group">
-                          <label>Usuario</label>
-                          	<input class="form-control" type="text" name="usuario" id="usuario" disabled="">
-                        </div>
-                        <div class="form-group">
-                          <label>Contraseña</label>
-                          	<input class="form-control" type="password" name="pass" id="pass" disabled="">
-                        </div>
-                        <div class="form-group">
-                        <label>Categoria</label>
-                          <select class="form-control">
-  						<%	ArrayList<Categoria> categorias = (ArrayList<Categoria>)request.getAttribute("categorias");
-           					for(Categoria c : categorias){
-           				%>
-           				<option disabled=""><%=c.getDescripcion() %></option>
-           				<%} %>
-						</select>
-					</div>
-		
+                     <!--/Form-->
+                <%if(session.getAttribute("existedni")!=null){%>
+                <!-- EXISTE DNI -->
+                <%@ include file="/existepersona.jsp" %>
+                
 
-					<div class="form-group">
-					<br>
-						<button class="btn btn-success btn-block" disabled >Guardar</button>
-					</div>
+                <!--  #### -->
+                <%  } %>
+                <%if(session.getAttribute("nuevodni")!=null){%>
+                <!-- NUEVO DNI -->
+                <%@ include file="/nuevapersona.jsp" %>
+
+                <!--  #### -->
+                <%  } %>
+                <%if(session.getAttribute("existedni")==null&&session.getAttribute("nuevodni")==null){%>
+                <!-- NUEVO DNI --> 
+
+                <div class="col-lg-6">
+                	<div class="form-group">
+                    <label>DNI</label>
+                    <input class="form-control" type="number"  name="dni" id="dni" disabled="" >
+                  </div>
+
+                  <div class="form-group">
+                    <label>Nombre</label>
+                  	<input class="form-control" type="text" name="nombre" id="nombre" disabled="" >
+                  </div>
+
+                  <div class="form-group">
+                    <label>Apellido</label>
+                    <input class="form-control" type="text" name="apellido" id="apellido" disabled="" >
+                  </div>
+
+                  <div class="form-group">
+                    <label>Estado</label>
+                    <div class="checkbox" disabled="">
+                      <label><input type="checkbox" value="admin" disabled="">Habilitado</label>
+                    </div>
+                  </div>
+
+                </div><!--/col6-->
+
+                <div class="col-lg-6">
+                	<div class="form-group">
+                    <label>Usuario</label>
+                    <input class="form-control" type="text" name="usuario" id="usuario" disabled="">
+                  </div>
+
+                  <div class="form-group">
+                    <label>Contraseña</label>
+                      <input class="form-control" type="password" name="pass" id="pass" disabled="">
+                  </div>
+
+                  <div class="form-group">
+                    <label>Categoria</label>
+                    <select class="form-control">
+
+  						      <%	
+                     ArrayList<Categoria> categorias = (ArrayList<Categoria>)request.getAttribute("categorias");
+           				   for(Categoria c : categorias){
+           			    	%>
+           			  	<option disabled=""><%=c.getDescripcion() %></option>
+           				 <%} %>
+						         </select>
+					       </div>
+                 <div class="form-group">
+					        <br>
+						      <button class="btn btn-success btn-block" disabled >Guardar</button>
+					       </div>
                        
-                    </div>
-                    </div>
-                </div>
-                   	<%  } %>
-                 </div>
-             </div>
-         </div>
-      </div>
-        <div class="col-lg-6 mb-6">
-          <div class="card h-100">
-            <h4 class="card-header">Listado de Personas</h4>
-            <div class="card-body">
+                </div><!--Col 6-->
+                <%  } %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+         <div class="panel panel-default">
+          <div class="panel-heading">Listado de Personas</div>
+               <div class="panel-body">
+                  <div class="row">
+				
              	<table class="table table-hover ">
             		<thead>
             			<tr>
@@ -118,10 +132,13 @@
             			</tr>
             		</thead> 
             		<tbody> 
+            		
            		<% 
            		ArrayList<Persona> listaPer = (ArrayList<Persona>)request.getAttribute("listaper");
            		for(Persona p : listaPer){
            		%>
+           		<form class="form-persona" name="dni" action="Persona" method="get">
+           		<input class="form-control" type="number"  name="dni" id="dni" hidden value="<%=p.getDni()%>" >
             			<tr> 
             				<th scope="row"><%=p.getDni()%></th> 
             				<td><%=p.getUss()%></td> 
@@ -129,17 +146,19 @@
             				<td ><%=p.getApellido()%></td>
             				<td><%=p.getCategoria().getDescripcion()%></td>
             				<td>
-            				<button type="button" class="btn btn-outline btn-warning btn-xs">Modificar</button>
+            				<button type="submit" class="btn btn-outline btn-warning btn-xs">Modificar</button>
             				</td>
-            			</tr> 
+            			</tr>
+            			</form>
             			<%}%>
+            			
             		 </tbody> 
             		</table>
             </div>	
             </div>
             </div>	
 
-    			
+    	</div>		
 	</div>
 </div>
 
