@@ -1,6 +1,9 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import controlers.CtrlABMPersona;
 import controlers.CtrlABMReserva;
 import entity.Persona;
+import entity.Reserva;
 
 /**
  * Servlet implementation class Inicio
@@ -54,16 +58,20 @@ public class Inicio extends HttpServlet {
 				per.setPass(pass);
 				session.setAttribute("error", null);
 				CtrlABMPersona ctrlPer= new CtrlABMPersona();
-				CtrlABMReserva ctrlRes = new CtrlABMReserva();
+				
 				pers=ctrlPer.login(per);
 				if (pers == null) {
 					session.setAttribute("usuario", null);
 					session.setAttribute("error", true);
 					pagina = "/login.jsp";
 					}else{
+						CtrlABMReserva ctrlRes = new CtrlABMReserva();
+						ArrayList<Reserva> listaRes = ctrlRes.getById(pers.getId());
 						System.out.println("ID usuario ingreso: "+pers.getId());
-						session.setAttribute("respend", ctrlRes.getById(pers.getId()));
+						System.out.println("Reservas: "+listaRes.get(1).getDetalle());
+						
 						session.setAttribute("usuario", pers);
+						request.setAttribute("listares", listaRes );
 					}
 				
 				}
@@ -72,7 +80,8 @@ public class Inicio extends HttpServlet {
 			}
 			System.out.println("#############INGRESO##############");
 			
-			request.getRequestDispatcher(pagina).forward(request, response);
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(pagina);
+	        dispatcher.forward(request, response);  
 	}
 }
 
