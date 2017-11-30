@@ -21,12 +21,12 @@ function carga() {
 </body>
 <div class="container">
 	<div class="row" id="center">
-	<div class="col-md-12 col-md-offset-12">
+	<div id="center" >
     		<h1 align="center">Sistema de Reserva</h1>
     		<p align="center" >JAVA UTN FRRO</p>
     	</div>
     </div>
-    <div class="col-md-6 col-md-offset-6" id="center">
+    <div id="center">
     <%if(session.getAttribute("error")!=null){%>
     	<div class="alert alert-danger">
         	<button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>

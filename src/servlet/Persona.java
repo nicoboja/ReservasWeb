@@ -43,6 +43,23 @@ public class Persona extends HttpServlet {
 				ArrayList<entity.Persona> listaper = ctrlPer.getAll();
 				System.out.println(listaper.get(1).getApellido());
 				request.setAttribute("listaper", listaper);
+				request.setAttribute("categorias", ctrlPer.getCategorias());
+				
+				if(request.getParameter("dni")!=null){
+					String dni=request.getParameter("dni");
+					System.out.println("parametro "+dni);
+					entity.Persona perdni = new entity.Persona();
+					perdni = ctrlPer.getByDni(dni);
+					
+					session.setAttribute("existedni", perdni);
+					if(perdni==null){
+					session.setAttribute("nuevodni", dni);
+					}else{
+					session.setAttribute("nuevodni", null);
+					}
+				}else{
+					session.setAttribute("perdni", null);
+				}
 				
 			}else{
 				pagina = "/login.jsp";
@@ -56,7 +73,7 @@ public class Persona extends HttpServlet {
 		RequestDispatcher dispatcher =  getServletContext().getRequestDispatcher(pagina);
 		dispatcher.forward(request, response);  
 		
-		request.getRequestDispatcher(pagina).forward(request, response);
+		//request.getRequestDispatcher(pagina).forward(request, response);
 	}
 
 	/**

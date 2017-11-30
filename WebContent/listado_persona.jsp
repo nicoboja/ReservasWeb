@@ -21,7 +21,88 @@
 
 <div class="container">   
 	<div class="row">
-        <div class="col-lg-12 mb-12">
+	<div class="col-lg-6">
+			<div class="panel panel-default">
+	        <div class="panel-heading">Busqueda Persona</div>
+           		 <div class="panel-body">
+                    <div class="row">
+                    <form class="form-persona" name="dni" action="Persona" method="get">
+                        	 <div class="col-lg-6">
+                        	 	<label>Ingrese DNI</label>
+        	           		 	<div class="input-group">
+                       		 		<input class="form-control input-sm" type="number"  name="dni" id="dni" autofocus>
+                           			<span class="input-group-btn">
+                           			<button type="submit" class="btn btn-info btn-sm">Buscar</button>  </a>	
+                           			</span>
+                          		 </div>
+                          	 </div>
+                     </form>
+                     <%if(session.getAttribute("existedni")!=null){%>
+                    	<%@ include file="/existepersona.jsp" %>
+                   	<%  } %>
+                     <%if(session.getAttribute("nuevodni")!=null){%>
+                    	<%@ include file="/nuevapersona.jsp" %>
+                   <%  } %>
+                   <%if(session.getAttribute("existedni")==null&&session.getAttribute("nuevodni")==null){%>
+                    	
+                	<div class="col-lg-6">
+                		<div class="form-group">
+                          <label>DNI</label>
+                          	<input class="form-control" type="number"  name="dni" id="dni" disabled="" >
+                          	
+                        </div>
+                        <div class="form-group">
+                          <label>Nombre</label>
+                          	<input class="form-control" type="text" name="nombre" id="nombre" disabled="" >
+                        </div>
+                        <div class="form-group">
+                          <label>Apellido</label>
+                          	<input class="form-control" type="text" name="apellido" id="apellido" disabled="" >
+                        </div>
+                        <div class="form-group">
+                          	<label>Estado</label>
+                            	<div class="checkbox" disabled="">
+                                   <label>
+                                     <input type="checkbox" value="admin" disabled="">Habilitado
+                                   </label>
+                                </div>
+                                </div>
+                    </div>
+                    <div class="col-lg-6">
+                		<div class="form-group">
+                          <label>Usuario</label>
+                          	<input class="form-control" type="text" name="usuario" id="usuario" disabled="">
+                        </div>
+                        <div class="form-group">
+                          <label>Contraseña</label>
+                          	<input class="form-control" type="password" name="pass" id="pass" disabled="">
+                        </div>
+                        <div class="form-group">
+                        <label>Categoria</label>
+                          <select class="form-control">
+  						<%	ArrayList<Categoria> categorias = (ArrayList<Categoria>)request.getAttribute("categorias");
+           					for(Categoria c : categorias){
+           				%>
+           				<option disabled=""><%=c.getDescripcion() %></option>
+           				<%} %>
+						</select>
+					</div>
+		
+
+					<div class="form-group">
+					<br>
+						<button class="btn btn-success btn-block" disabled >Guardar</button>
+					</div>
+                       
+                    </div>
+                    </div>
+                </div>
+                   	<%  } %>
+                 </div>
+             </div>
+         </div>
+      </div>
+        <div class="col-lg-6 mb-6">
           <div class="card h-100">
             <h4 class="card-header">Listado de Personas</h4>
             <div class="card-body">
