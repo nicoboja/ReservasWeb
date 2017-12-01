@@ -1,8 +1,9 @@
- 	<form class="form-persona" name="dni" action="Persona" method="post">
+ 	<form class="form-persona" name="datospersona" action="Persona" method="post">
                   <div class="col-lg-6">
                 		<div class="form-group">
                           <label>DNI</label>
-                          	<input class="form-control" type="number"  name="dni" id="dni" disabled="" value="<%=((Persona)session.getAttribute("existedni")).getDni()%>">
+                          	<input class="form-control" type="number" name="d" id="d" value="<%=((Persona)session.getAttribute("existedni")).getDni()%>" disabled>
+                          	<input class="form-control" type="number" name="dniform" id="dniform" value="<%=((Persona)session.getAttribute("existedni")).getDni()%>" hidden>
                           	
                         </div>
                         <div class="form-group">
@@ -17,7 +18,7 @@
                           	<label>Estado</label>
                             	<div class="checkbox">
                                    <label>
-                                     <input type="checkbox" value="admin" <% if(((Persona)session.getAttribute("existedni")).isHabilitado()){%> checked<%} %>>Habilitado
+                                     <input type="checkbox" value="true" name="habilitado" id="habilitado" <% if(((Persona)session.getAttribute("existedni")).isHabilitado()){%> checked<%} %>>Habilitado
                                    </label>
                                 </div>
                                 </div>
@@ -33,11 +34,11 @@
                         </div>
                         <div class="form-group">
                         <label>Categoria</label>
-                          <select class="form-control">
+                          <select id="categoria" name="categoria" class="form-control">
   						<%	ArrayList<Categoria> categorias = (ArrayList<Categoria>)request.getAttribute("categorias");
            					for(Categoria c : categorias){
            				%>
-           				<option value="<%=c.getDescripcion() %>" <%if(((Persona)session.getAttribute("existedni")).getCategoria().getDescripcion().equals(c.getDescripcion()) ){%>selected<% } %>><%=c.getDescripcion() %></option>
+           				<option id="categoria" name="categoria" value="<%=c.getId() %>" <%if(((Persona)session.getAttribute("existedni")).getCategoria().getDescripcion().equals(c.getDescripcion()) ){%>selected<% } %>><%=c.getDescripcion() %></option>
            				<%} %>
 						</select>
 					</div>

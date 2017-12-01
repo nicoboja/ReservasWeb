@@ -76,4 +76,9 @@ public class CtrlABMPersona {
 	public ArrayList<Categoria> getCategorias() throws Exception{
 		return dataCat.getAll();
 	}
+	public Categoria getCat(int c) throws Exception{
+		System.out.println("Ctrl getcat");
+		return dataCat.getById(c);
+	}
+	
 }
