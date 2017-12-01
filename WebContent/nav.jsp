@@ -1,3 +1,4 @@
+<%@page import="entity.Persona"%>
 <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
@@ -7,21 +8,23 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
+          <%if(session.getAttribute("usuario")!=null && ((Persona)session.getAttribute("usuario")).getCategoria().getDescripcion().equals("Administrador")){%>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Persona
               </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-                <a class="dropdown-item" href="#">Gestion de Personas</a>
-                <a class="dropdown-item" href="persona">Listado de Personas</a>
+               
+               	<a class="dropdown-item" href="persona">Gestion de Personas</a>
               </div>
             </li>
+          <%} %>  
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Elemento
               </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-                <a class="dropdown-item" href="#">Gestion de Elementos</a>
+                <a class="dropdown-item" href="#">Elementos</a>
                 <a class="dropdown-item" href="elemento">Tipos de Elementos</a>
               </div>
             </li>
@@ -32,7 +35,7 @@
               </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
                 <a class="dropdown-item" href="#">Nueva Reserva</a>
-                <a class="dropdown-item" href="#">Reservas Pendientes</a>
+               
               </div>
             </li>
            

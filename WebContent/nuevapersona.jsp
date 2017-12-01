@@ -3,17 +3,17 @@
                 		<div class="form-group">
                           <label>DNI</label>
                           	<input class="form-control" type="number"  name="d" id="d" disabled="" value="<%=session.getAttribute("nuevodni")%>">
-                          	<input class="form-control" type="number" name="dniform" id="dniform" value="<%=session.getAttribute("nuevodni")%>" hidden>
+                          	<input class="form-control" type="number" name="dniform" id="dniform"  required="" value="<%=session.getAttribute("nuevodni")%>" hidden>
                           	
                         </div>
                        
                         <div class="form-group">
                           <label>Nombre</label>
-                          	<input class="form-control" type="text" name="nombre" id="nombre"  >
+                          	<input class="form-control" type="text" name="nombre" id="nombre" required=""  >
                         </div>
                         <div class="form-group">
                           <label>Apellido</label>
-                          	<input class="form-control" type="text" name="apellido" id="apellido"  >
+                          	<input class="form-control" type="text" name="apellido" id="apellido" required=""  >
                         </div>
                         <div class="form-group">
                           	<label>Estado</label>
