@@ -22,7 +22,7 @@
               </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
                 <a class="dropdown-item" href="#">Gestion de Elementos</a>
-                <a class="dropdown-item" href="#">Tipos de Elementos</a>
+                <a class="dropdown-item" href="elemento">Tipos de Elementos</a>
               </div>
             </li>
             

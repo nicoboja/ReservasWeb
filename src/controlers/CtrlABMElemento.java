@@ -13,6 +13,13 @@ public class CtrlABMElemento {
 	private DataElemento dataElem=new DataElemento();
 	private DataTipoElemento dataTipo=new DataTipoElemento();
 	
+	
+	public CtrlABMElemento(DataElemento dataElem, DataTipoElemento dataTipo) {
+		super();
+		this.dataElem = dataElem;
+		this.dataTipo = dataTipo;
+	}
+
 	public void add(Elemento e) throws Exception{
 		dataElem.add(e);
 	}

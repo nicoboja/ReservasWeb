@@ -12,6 +12,9 @@ public class CtrlABMTipoElemento {
 	public TipoElemento getByNombre(TipoElemento te) throws Exception{
 		return this.dataTipo.getByNombre(te);		
 	}
+	public TipoElemento getById(int idTE) throws Exception{
+		return this.dataTipo.getById(idTE);		
+	}
 	public void add(TipoElemento te) throws Exception{
 		dataTipo.add(te);
 	}

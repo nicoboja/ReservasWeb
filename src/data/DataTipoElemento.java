@@ -38,7 +38,36 @@ public class DataTipoElemento {
 			}
 		}
 		return tipoElem;
-	}	
+	}
+	public TipoElemento getById(int idTE) throws Exception{
+		
+		TipoElemento tipoElem=new TipoElemento();
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		try {
+			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
+					"select * from tipoelemento where idT=?");
+			stmt.setInt(1, idTE);
+			rs=stmt.executeQuery();
+			if(rs!=null && rs.next()){
+					tipoElem.setIdT(rs.getInt("idT"));
+					tipoElem.setDescripcion(rs.getString("descripcion"));
+					tipoElem.setCantMax(rs.getInt("tmax"));
+					tipoElem.setDiasMaxAnt(rs.getInt("diasant"));
+			}			
+		} catch (Exception e1) {
+			throw e1;
+		} finally{
+			try {
+				if(rs!=null)rs.close();
+				if(stmt!=null)stmt.close();
+				FactoryConexion.getInstancia().releaseConn();
+			} catch (SQLException e1) {
+				throw e1;
+			}
+		}
+		return tipoElem;
+	}
 	
 	public void add(TipoElemento te) throws Exception {
 		PreparedStatement stmt=null;
