@@ -1,19 +1,13 @@
 package entity;
 
-public class Elemento {
-	
 
+public class Elemento{
 	private int id;
 	private String nombre;
-	private String descrip;
 	private TipoElemento tipo;
 	
-	public TipoElemento getTipoElem() {
-		return tipo;
-	}
-	public void setTipoElem(TipoElemento tipo) {
-		this.tipo = tipo;
-	}
+	public Elemento(){}
+	
 	public int getId() {
 		return id;
 	}
@@ -26,33 +20,25 @@ public class Elemento {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public String getDescrip() {
-		return descrip;
+	public TipoElemento getTipo() {
+		return tipo;
 	}
-	public void setDescrip(String descrip) {
-		this.descrip = descrip;
-	}
-	
-
-	
-	public Elemento(){}
-	
-
-	
-
-	@Override
-	public int hashCode() {
-		return Integer.hashCode(this.id);
+	public void setTipo(TipoElemento tipo) {
+		this.tipo = tipo;
 	}
 	
 	@Override
-	public boolean equals(Object obj) {
-		return ((obj instanceof Elemento) &&((Elemento)obj).getId()==this.id);
+	public boolean equals(Object e)
+	{
+		return (e instanceof Elemento) && ((((Elemento) e).getNombre().equals(this.getNombre())));
 	}
+	
 	@Override
-	public String toString() {
-		return String.valueOf(id) + nombre;
-	}	
-
+	public String toString()
+	{
+		return (this.id + " + " + this.getNombre());
+	}
+	
+	
 	
 }

@@ -1,102 +1,65 @@
 package entity;
 
-import java.sql.Date;
-import java.sql.Time;
 
 public class Reserva {
 	private int id;
-	private java.sql.Date fecha;//= new SimpleDateFormat("dd/MM/yyyy HH:mm");
-	private java.sql.Time hora;
-	private String detalle;
-	private Elemento elem;
-	private Persona per;
-	private int cantHoras;
+	private TipoElemento tipo;
+	private String fechaHoraDesde;
+	private String fechaHoraHasta;
+	private Elemento elemento;
+	private String observacion;
+	private Persona persona;
 	private String estado;
 	
-	public Reserva(){};
+	public Reserva(){}
 	
-	public Reserva(int id, Date fecha, Time hora, String detalle, Elemento elem, Persona per, int cantHoras, String estado) {
-		super();
-		this.id = id;
-		this.fecha = fecha;
-		this.hora = hora;
-		this.detalle = detalle;
-		this.elem = elem;
-		this.per = per;
-		this.cantHoras = cantHoras;
-		this.estado = estado;
-	}
-	
-	public String getEstado() {
-		return estado;
-	}
-
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
-
-	public int getCantHoras() {
-		return cantHoras;
-	}
-	public void setCantHoras(int cantHoras) {
-		this.cantHoras = cantHoras;
-	}
-	public Date getFecha() {
-		return fecha;
-	}
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
-	}
-	public Time getHora() {
-		return hora;
-	}
-	public void setHora(Time hora) {
-		this.hora = hora;
-	}
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getDetalle() {
-		return detalle;
+	public TipoElemento getTipo() {
+		return tipo;
 	}
-	public void setDetalle(String detalle) {
-		this.detalle = detalle;
+	public void setTipo(TipoElemento tipo) {
+		this.tipo = tipo;
 	}
-	public Elemento getElem() {
-		return elem;
+	public String getFechaHoraDesde() {
+		return fechaHoraDesde;
 	}
-	public void setElem(Elemento elem) {
-		this.elem = elem;
+	public void setFechaHoraDesde(String fechaHoraDesde) {
+		this.fechaHoraDesde = fechaHoraDesde;
 	}
-	public Persona getPer() {
-		return per;
+	public String getFechaHoraHasta() {
+		return fechaHoraHasta;
 	}
-	public void setPer(Persona per) {
-		this.per = per;
+	public void setFechaHoraHasta(String fechaHoraHasta) {
+		this.fechaHoraHasta = fechaHoraHasta;
 	}
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + id;
-		return result;
+	public Elemento getElemento() {
+		return elemento;
 	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (!(obj instanceof Reserva))
-			return false;
-		Reserva other = (Reserva) obj;
-		if (id != other.id)
-			return false;
-		return true;
+	public void setElemento(Elemento elemento) {
+		this.elemento = elemento;
 	}
-
+	public String getObservacion() {
+		return observacion;
+	}
+	public void setObservacion(String observacion) {
+		this.observacion = observacion;
+	}
+	public Persona getPersona() {
+		return persona;
+	}
+	public void setPersona(Persona persona) {
+		this.persona = persona;
+	}
+	public String getEstado() {
+		return estado;
+	}
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
 	
 }

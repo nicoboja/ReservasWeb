@@ -1,135 +1,260 @@
 package data;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
-import java.security.KeyStore.ProtectionParameter;
-import java.sql.*;
-import entity.*;
+import com.mysql.jdbc.exceptions.MySQLIntegrityConstraintViolationException;
+
+import entity.Persona;
+import entity.TipoElemento;
+import util.AppDataException;
+
+
 
 public class DataElemento {
 
-	public void add(Elemento e) throws Exception {
-		PreparedStatement stmt=null;
-		ResultSet keyResultSet=null;
-		try{
-			
-			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
-					"insert into elemento (idT, nombre, descripcion) values (?,?,?)");
-			stmt.setInt(1, e.getTipoElem().getIdT());
-			stmt.setString(2, e.getNombre());
-			stmt.setString(3, e.getDescrip());
-			stmt.executeUpdate();			
-			
-		}catch (Exception e1){
-			System.out.println("No se ha cargado un elemento");
-			throw e1;
-		}finally{
-			FactoryConexion.getInstancia().releaseConn();
-		}			
-	}
-	
-	public void delete(Elemento e) throws Exception {
-		PreparedStatement stmt=null;
-		try{
-			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
-					"delete from elemento where idE=?");
-			stmt.setInt(1, e.getId());
-			stmt.executeUpdate();			
-		}catch (Exception e1) {
-			System.out.println("Ha fallado el borrado de datos");
-			throw e1;
-		}finally{
-			FactoryConexion.getInstancia().releaseConn();
-		}		
-	}
-	
-	
-	public Elemento getByNombre(Elemento e) throws Exception{
-		Elemento elem= null;
-		
-		PreparedStatement stmt=null;
+	public ArrayList<TipoElemento> buscarTodo(Persona pers) throws Exception,SQLException
+	{
+		Statement stm=null;
+		PreparedStatement pstm=null;
 		ResultSet rs=null;
-		try {
-			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
-					"select e.idE, e.`nombre`, e.`descripcion`, t.idT, t.descripcion from elemento e inner join tipoelemento t  on e.`idT` = t.idT where nombre=?");
-			stmt.setString(1, e.getNombre());
-			rs=stmt.executeQuery();
-			if(rs!=null && rs.next()){
-					elem =new Elemento();
-					elem.setTipoElem(new TipoElemento());
-					
-					elem.setId(rs.getInt("idE"));
-					elem.setNombre(rs.getString("nombre"));
-					elem.setDescrip(rs.getString("descripcion"));
-					elem.getTipoElem().setDescripcion(rs.getString("descripcion"));
-					elem.getTipoElem().setIdT(rs.getInt("idT"));
-				
-					
-			}
-			
-		} catch (Exception e1) {
-			throw e1;
-		} finally{
-			try {
-				if(rs!=null)rs.close();
-				if(stmt!=null)stmt.close();
-				FactoryConexion.getInstancia().releaseConn();
-			} catch (SQLException e1) {
-				throw e1;
+		ArrayList<TipoElemento> listadotipoelemento= new ArrayList<TipoElemento>();
+		
+		if(!((pers.getCategoria()).equals("Online"))){
+			try 
+			{
+				stm = FactoryConexion.getInstancia().getConn().createStatement();
+				rs = stm.executeQuery("select * from tipoelemento");
+				if(rs!=null){
+					while(rs.next()){
+						TipoElemento tipoele=new TipoElemento();
+						tipoele.setId(rs.getInt("id"));
+						tipoele.setNombre(rs.getString("nombre"));
+						tipoele.setCantMax(rs.getInt("cant_max"));
+						tipoele.setEncargado(rs.getBoolean("encargado"));
+						tipoele.setLimiteHoras(rs.getInt("limiteHoras"));
+						tipoele.setCantMax(rs.getInt("diasMax"));
+						listadotipoelemento.add(tipoele);
+						}
+				}
+			} catch (SQLException exc) {
+				throw new AppDataException(exc,"No es posible buscar un tipo de elemento en la base de datos");
+			}catch (Exception e){
+				throw e;
+			} 
+		}
+		else{
+			try 
+			{
+				pstm = FactoryConexion.getInstancia().getConn().prepareStatement("select * from tipoelemento where encargado=b'0'");
+//				pstm.(1, false);
+				rs = pstm.executeQuery();
+				if(rs!=null){
+					while(rs.next()){
+						TipoElemento tipoele=new TipoElemento();
+						tipoele.setId(rs.getInt("id"));
+						tipoele.setNombre(rs.getString("nombre"));
+						tipoele.setCantMax(rs.getInt("cant_max"));
+						tipoele.setEncargado(rs.getBoolean("encargado"));
+						tipoele.setLimiteHoras(rs.getInt("limiteHoras"));
+						tipoele.setDiasMax(rs.getInt("diasMax"));
+						listadotipoelemento.add(tipoele);
+						}
+				}
+			} catch (SQLException exc) {
+				throw new AppDataException(exc,"No es posible buscar un tipo de elemento en la base de datos");
+			}catch (Exception e) 
+			{
+				throw e;
 			}
 		}
-		return elem;
-	}
-	
-	public ArrayList<Elemento> getAll() throws Exception{
-		Statement stmt=null;
-		ResultSet rs=null;
-		ArrayList<Elemento> elementos= new ArrayList<Elemento>();
-		try {
-			stmt = FactoryConexion.getInstancia()
-					.getConn().createStatement();
-			rs = stmt.executeQuery("select * from elemento");
-			if(rs!=null){
-				while(rs.next()){
-					Elemento elem=new Elemento();
-					elem.setId(rs.getInt("idE"));
-					elem.setNombre(rs.getString("nombre"));
-					elem.setDescrip(rs.getString("descripcion"));
-					elementos.add(elem);
-				}
-			}
-		} catch (SQLException e) {
-			
-			throw e;
-		} 
-
 		try {
 			if(rs!=null) rs.close();
-			if(stmt!=null) stmt.close();
+			if(pstm!=null) pstm.close();
 			FactoryConexion.getInstancia().releaseConn();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			
-			e.printStackTrace();
-		}		
-		return elementos;		
-	}	
-
-	public void update(Elemento e) throws Exception {
-		PreparedStatement stmt=null;
-		try{
-			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
-					"update elemento set nombre=?, descripcion=?, idT=? where idE=?;");
-			stmt.setString(1, e.getNombre());
-			stmt.setString(2, e.getDescrip());
-			stmt.setInt(3, e.getTipoElem().getIdT());
-			stmt.setInt(4, e.getId());
-			stmt.executeUpdate();		
-			System.out.println("Se Modifico la Persona con ID= "+e.getId()+" Nombre: "+e.getNombre());
-		}catch (Exception e1) {
-			System.out.println("Ha fallado el borrado de datos");
-			throw e1;
-		}finally{
-			FactoryConexion.getInstancia().releaseConn();
-		}		
+			throw e;
+		}
+		
+		return listadotipoelemento;
+		
 	}
+
+	public ArrayList<TipoElemento> devolverTodoTipoElemento() throws Exception,SQLException
+	{
+		Statement stm=null;
+		ResultSet rs=null;
+		ArrayList<TipoElemento> listadotipoelemento= new ArrayList<TipoElemento>();
+		try 
+		{
+			stm = FactoryConexion.getInstancia().getConn().createStatement();
+			rs = stm.executeQuery("select * from tipoelemento");
+			if(rs!=null){
+				while(rs.next()){
+					TipoElemento tipoele=new TipoElemento();
+					tipoele.setId(rs.getInt("id"));
+					tipoele.setNombre(rs.getString("nombre"));
+					tipoele.setCantMax(rs.getInt("cant_max"));
+					tipoele.setEncargado(rs.getBoolean("encargado"));
+					tipoele.setLimiteHoras(rs.getInt("limiteHoras"));
+					tipoele.setDiasMax(rs.getInt("diasMax"));
+					listadotipoelemento.add(tipoele);
+					}
+			}
+		} catch (SQLException exc) {
+			throw new AppDataException(exc,"No es posible buscar un tipo de elemento en la base de datos");
+		}catch (Exception e){
+			throw e;
+		}
+		
+		try {
+			if(stm!=null){
+				stm.close();
+				FactoryConexion.getInstancia().releaseConn();
+			}
+			
+		} catch (Exception e) {
+			throw e;
+		}
+		return listadotipoelemento;	
+		
+	}
+	
+	
+	public void agregarTipoElemento (TipoElemento tipoele) throws Exception,SQLException
+	{
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		
+		try {
+			pstm = FactoryConexion.getInstancia().getConn().prepareStatement(
+					"INSERT INTO tipoelemento(nombre,cant_max,encargado,limiteHoras,diasMax) VALUES (?,?,?,?,?)",
+					PreparedStatement.RETURN_GENERATED_KEYS);
+			pstm.setString(1, tipoele.getNombre());
+			pstm.setInt(2, tipoele.getCantMax());
+			pstm.setBoolean(3,tipoele.getEncargado());
+			pstm.setInt(4, tipoele.getCantMax());
+			pstm.setInt(5, tipoele.getDiasMax());
+			pstm.executeUpdate();
+			rs=pstm.getGeneratedKeys();
+			if(rs!=null && rs.next()){
+				tipoele.setId(rs.getInt(1));
+			}
+		} catch (SQLException exc) {
+			throw new AppDataException(exc,"No es posible agregar un tipo de elemento en la base de datos");
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		try {
+			if(rs!=null)rs.close();
+			if(pstm!=null)pstm.close();
+			FactoryConexion.getInstancia().releaseConn();
+		} catch (Exception e) {
+			throw e;
+		}
+		
+	}
+	
+	public void eliminarTipoElemento(TipoElemento tipoele) throws Exception,SQLException
+	{
+		PreparedStatement pstm = null;
+		
+		
+		try {
+			pstm = FactoryConexion.getInstancia().getConn().prepareStatement(
+					"DELETE FROM tipoelemento WHERE id=?");
+			pstm.setInt(1, tipoele.getId());
+			pstm.executeUpdate();
+		}catch (MySQLIntegrityConstraintViolationException exc) {
+			throw new AppDataException(exc,"Imposible eliminar, Tipo de Elemento tiene Elementos dependientes");
+		}  
+		catch (SQLException exc) {
+			throw new AppDataException(exc,"Imposible eliminar, Tipo de Elemento tiene Elementos dependientes");
+		} 
+			catch(Exception e){
+				throw e;		
+		}
+		
+		try {
+			if(pstm!=null)pstm.close();
+			FactoryConexion.getInstancia().releaseConn();
+		} catch (SQLException exc) {
+			throw new AppDataException(exc,"Error de conexion");			
+		}
+		catch (Exception exc) {
+			throw exc;			
+		}
+	}
+	
+	public void modificarTipoElemento(TipoElemento tipoele) throws Exception,SQLException
+	{
+		PreparedStatement pstm = null;
+		
+		
+		try {
+			pstm = FactoryConexion.getInstancia().getConn().prepareStatement(
+					"UPDATE tipoelemento SET nombre=?,cant_max=?,encargado=?,limiteHoras=?,diasMax=?  WHERE id=?");
+			pstm.setString(1, tipoele.getNombre());
+			pstm.setInt(2, tipoele.getCantMax());
+			pstm.setBoolean(3,tipoele.getEncargado());
+			pstm.setInt(4, tipoele.getLimiteHoras());
+			pstm.setInt(5, tipoele.getDiasMax());
+			pstm.setInt(6, tipoele.getId());
+			pstm.executeUpdate();
+		} catch (SQLException exc) {
+			throw new AppDataException(exc,"No es posible modificar un tipo de elemento en la base de datos");	
+		} catch (Exception e) {
+			throw e;
+		}
+		
+		try {
+			if(pstm!=null)pstm.close();
+			FactoryConexion.getInstancia().releaseConn();
+		} catch (Exception e) {
+			throw e;
+		}	
+		
+	}
+	
+	public TipoElemento buscarTipoElemento(TipoElemento tipoele) throws Exception,SQLException
+	{
+		PreparedStatement pstm = null;
+		ResultSet rs = null;
+		
+		try {
+			pstm = FactoryConexion.getInstancia().getConn().prepareStatement("Select * from tipoelemento where id=?");
+			pstm.setInt(1, tipoele.getId());
+			rs=pstm.executeQuery();
+			if(rs!=null){
+				while(rs.next())
+					{
+					tipoele.setId(rs.getInt("id"));
+					tipoele.setNombre(rs.getString("nombre"));
+					tipoele.setCantMax(rs.getInt("cant_max"));
+					tipoele.setEncargado(rs.getBoolean("encargado"));
+					tipoele.setLimiteHoras(rs.getInt("limiteHoras"));
+					tipoele.setDiasMax(rs.getInt("diasMax"));
+					}
+						}
+		} catch (SQLException exc) {
+			throw new AppDataException(exc,"No es posible buscar un tipo de elemento en la base de datos");	
+		}catch (Exception e) {
+			throw e;
+		}
+		
+		try {
+			if(pstm!=null)pstm.close();
+			FactoryConexion.getInstancia().releaseConn();
+		} catch (Exception e) {
+			throw e;
+		}	
+		
+		
+		return tipoele;
+	}
+	
 }

@@ -1,49 +1,28 @@
 package entity;
 
 public class Persona {
+
 	private int id;
+	private String dni;
 	private String nombre;
 	private String apellido;
-	private String dni;
+	private String usuario;
+	private String contrasena;
 	private boolean habilitado;
-	private Categoria categoria;
-	private String pass;
-	private String uss;
+	private String categoria;
 	
-	public String getPass() {
-		return pass;
-	}
-
-	public void setPass(String pass) {
-		this.pass = pass;
-	}
-
-	public String getUss() {
-		return uss;
-	}
-
-	public void setUss(String uss) {
-		this.uss = uss;
-	}
-
-	
-	
-	public Categoria getCategoria(){
-		return categoria;
-	}
-	
-	public void setCategoria(Categoria categoria){
-		this.categoria=categoria;
-	}
-	
-	public int getId(){
+	public int getId() {
 		return id;
 	}
-	
-	public void setId(int id){
-		this.id=id;
+	public void setId(int id) {
+		this.id = id;
 	}
-	
+	public String getDni() {
+		return dni;
+	}
+	public void setDni(String dni) {
+		this.dni = dni;
+	}
 	public String getNombre() {
 		return nombre;
 	}
@@ -56,44 +35,36 @@ public class Persona {
 	public void setApellido(String apellido) {
 		this.apellido = apellido;
 	}
-	public String getDni() {
-		return dni;
+	public String getUsuario() {
+		return usuario;
 	}
-	public void setDni(String dni) {
-		this.dni = dni;
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
 	}
+
 	public boolean isHabilitado() {
 		return habilitado;
 	}
 	public void setHabilitado(boolean habilitado) {
 		this.habilitado = habilitado;
 	}
-	
-	public Persona (String dni, String nombre, String apellido, boolean habilitado){
-		this.setDni(dni);
-		this.setNombre(nombre);
-		this.setApellido(apellido);
-		this.setHabilitado(habilitado);
+	public String getContrasena() {
+		return contrasena;
+	}
+	public void setContrasena(String contrasena) {
+		this.contrasena = contrasena;
+	}
+	public String getCategoria() {
+		return categoria;
+	}
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
+	}
+	@Override
+	public String toString()
+	{
+		return (this.id + " - " + this.getNombre()+", "+this.getApellido()  );
 	}
 	
 	public Persona(){}
-	
-	@Override
-	public boolean equals(Object p){
-		return (p instanceof Persona) &&
-			 (((Persona)p).getDni().equals(this.getDni()));
-					
-
-	}
-	
-	public boolean equalsUss(Object p){
-		return (p instanceof Persona) &&
-			 (((Persona)p).getUss().equals(this.getUss()));
-	}
-
 }
-
-
-
-
-
