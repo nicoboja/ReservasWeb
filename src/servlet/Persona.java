@@ -34,7 +34,7 @@ public class Persona extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println(" PERSONA LISTADO");
-		String pagina = "/listado_persona.jsp";
+		String pagina = "/persona.jsp";
 		HttpSession session = request.getSession();
 		
 		try {
@@ -52,17 +52,11 @@ public class Persona extends HttpServlet {
 					entity.Persona perdni = new entity.Persona();
 					perdni = ctrlPer.getByDni(dni);
 					
-					session.setAttribute("existedni", perdni);
+					request.setAttribute("existedni", perdni);
 					if(perdni==null){
-					session.setAttribute("nuevodni", dni);
-					}else{
-					session.setAttribute("nuevodni", null);
+					request.setAttribute("nuevodni", dni);
 					}
-				}else{
-					session.setAttribute("perdni", null);
-					
 				}
-				
 			}else{
 				pagina = "/login.jsp";
 			}
@@ -83,7 +77,7 @@ public class Persona extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("------- POST PERSONA -------");
-		String pagina = "/listado_persona.jsp";
+		String pagina = "/persona.jsp";
 		HttpSession session = request.getSession();
 		
 		try {
@@ -121,6 +115,13 @@ public class Persona extends HttpServlet {
 					System.out.println(perdni.getApellido());
 					if(perdni==null){
 						System.out.println("NUEVO");
+						try {
+							System.out.println("MODIFICAR");
+							ctrlPer.add(perform);
+							
+						} catch (Exception e) {
+							// TODO: handle exception
+						}
 					}else{
 					try {
 						perform.setId(perdni.getId());
@@ -135,10 +136,8 @@ public class Persona extends HttpServlet {
 						
 					}
 				}
-					session.setAttribute("nuevodni", null);
-					session.setAttribute("existedni", null);
+					
 					ArrayList<entity.Persona> listaper = ctrlPer.getAll();
-					System.out.println(listaper.get(1).getApellido());
 					request.setAttribute("listaper", listaper);
 					request.setAttribute("categorias", ctrlPer.getCategorias());
 				

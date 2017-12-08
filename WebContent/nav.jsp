@@ -7,17 +7,13 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <li class="nav-item">
+              <a href="Persona" class="nav-link">
                 Persona
               </a>
-              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-                <a class="dropdown-item" href="#">Gestion de Personas</a>
-                <a class="dropdown-item" href="persona">Listado de Personas</a>
-              </div>
             </li>
             <li class="nav-item">
-              <a href="tipoelementos" class="nav-link">
+              <a href="TipoElementos" class="nav-link">
                 Tipo Elemento
               </a>
             </li>
@@ -44,7 +40,7 @@
             </li>
            
             <li class="nav-item">
-              <a href="/ReservasWeb/Logout" class="nav-link">Cerrar Sesión</a>
+              <a href="Logout" class="nav-link">Cerrar Sesión</a>
             </li>
           </ul>
         </div>
