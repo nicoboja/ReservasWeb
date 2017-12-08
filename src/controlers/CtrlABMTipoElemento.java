@@ -27,5 +27,5 @@ public class CtrlABMTipoElemento {
 	public ArrayList<TipoElemento> getAll()throws Exception{
 		return dataTipo.getAll();
 	}
-
+	
 }

@@ -133,7 +133,7 @@ public class DataTipoElemento {
 					TipoElemento tipoElem=new TipoElemento();
 					tipoElem.setIdT(rs.getInt("idT"));
 					tipoElem.setDescripcion(rs.getString("descripcion"));
-					tipoElem.setCantMax(rs.getInt("tmax"));
+					tipoElem.setCantMax(rs.getInt("maxPend"));
 					tipoElem.setDiasMaxAnt(rs.getInt("diasant"));
 					tipoelementos.add(tipoElem);
 				}

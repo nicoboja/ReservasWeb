@@ -13,6 +13,9 @@ public class CtrlABMElemento {
 	private DataElemento dataElem=new DataElemento();
 	private DataTipoElemento dataTipo=new DataTipoElemento();
 	
+	public CtrlABMElemento(){
+		
+	}
 	
 	public CtrlABMElemento(DataElemento dataElem, DataTipoElemento dataTipo) {
 		super();

@@ -14,16 +14,16 @@ import controlers.CtrlABMTipoElemento;
 import entity.TipoElemento;
 
 /**
- * Servlet implementation class Elemento
+ * Servlet implementation class TipoElementos
  */
-@WebServlet({ "/Elemento", "/elemento", "/ELEMENTO" })
-public class Elemento extends HttpServlet {
+@WebServlet({ "/TipoElementos", "/tipoelementos", "/TIPOELEMENTOS" })
+public class TipoElementos extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Elemento() {
+    public TipoElementos() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -53,7 +53,6 @@ public class Elemento extends HttpServlet {
 					tipo = ctrlElem.getById(idTE);
 					System.out.println("TIPO: "+tipo.getDescripcion());
 				
-					//session.setAttribute("tipo", tipo);	
 					if(tipo.getDescripcion()==null){
 						System.out.println("tiponulo - es nuevo");
 						session.setAttribute("tipo", null);
@@ -149,7 +148,7 @@ public class Elemento extends HttpServlet {
 			// TODO: handle exception
 		}finally {
 			RequestDispatcher dispatcher =  getServletContext().getRequestDispatcher(pagina);
-			dispatcher.forward(request, response);  	
+			dispatcher.forward(request, response); 
 		}
 		
 		

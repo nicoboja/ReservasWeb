@@ -5,6 +5,7 @@ import javax.swing.JOptionPane;
 import java.security.KeyStore.ProtectionParameter;
 import java.sql.*;
 import entity.*;
+import util.AppDataException;
 
 public class DataElemento {
 
@@ -20,10 +21,10 @@ public class DataElemento {
 			stmt.setString(3, e.getDescrip());
 			stmt.executeUpdate();			
 			
-		}catch (Exception e1){
-			System.out.println("No se ha cargado un elemento");
-			throw e1;
-		}finally{
+		}catch (AppDataException e1){
+			throw new AppDataException(e1,"No es posible agregar ese elemento");
+		}
+		finally{
 			FactoryConexion.getInstancia().releaseConn();
 		}			
 	}
@@ -35,9 +36,8 @@ public class DataElemento {
 					"delete from elemento where idE=?");
 			stmt.setInt(1, e.getId());
 			stmt.executeUpdate();			
-		}catch (Exception e1) {
-			System.out.println("Ha fallado el borrado de datos");
-			throw e1;
+		}catch (AppDataException e1){
+			throw new AppDataException(e1,"No se ha podido eliminar ese elemento");
 		}finally{
 			FactoryConexion.getInstancia().releaseConn();
 		}		
@@ -88,13 +88,19 @@ public class DataElemento {
 		try {
 			stmt = FactoryConexion.getInstancia()
 					.getConn().createStatement();
-			rs = stmt.executeQuery("select * from elemento");
+			rs = stmt.executeQuery("select * from elemento e inner join tipoelemento t on e.idT=t.idT order by t.descripcion");
 			if(rs!=null){
 				while(rs.next()){
 					Elemento elem=new Elemento();
+					elem.setTipoElem(new TipoElemento());
 					elem.setId(rs.getInt("idE"));
 					elem.setNombre(rs.getString("nombre"));
 					elem.setDescrip(rs.getString("descripcion"));
+					elem.getTipoElem().setIdT(rs.getInt("idT"));
+					elem.getTipoElem().setDescripcion(rs.getString("t.descripcion"));
+					elem.getTipoElem().setCantMax(rs.getInt("maxPend"));
+					
+					
 					elementos.add(elem);
 				}
 			}
@@ -118,16 +124,16 @@ public class DataElemento {
 		PreparedStatement stmt=null;
 		try{
 			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
-					"update elemento set nombre=?, descripcion=?, idT=? where idE=?;");
+					"update elemento set nombre=?, descripcion=? where idE=?;");
 			stmt.setString(1, e.getNombre());
 			stmt.setString(2, e.getDescrip());
-			stmt.setInt(3, e.getTipoElem().getIdT());
-			stmt.setInt(4, e.getId());
+			
+			stmt.setInt(3, e.getId());
 			stmt.executeUpdate();		
 			System.out.println("Se Modifico la Persona con ID= "+e.getId()+" Nombre: "+e.getNombre());
-		}catch (Exception e1) {
-			System.out.println("Ha fallado el borrado de datos");
-			throw e1;
+		}catch (AppDataException e1){
+			throw new AppDataException(e1,"No se ha podido eliminar ese elemento");
+			
 		}finally{
 			FactoryConexion.getInstancia().releaseConn();
 		}		

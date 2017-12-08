@@ -16,15 +16,22 @@
                 <a class="dropdown-item" href="persona">Listado de Personas</a>
               </div>
             </li>
+            <li class="nav-item">
+              <a href="tipoelementos" class="nav-link">
+                Tipo Elemento
+              </a>
+            </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Elemento
               </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-                <a class="dropdown-item" href="#">Gestion de Elementos</a>
-                <a class="dropdown-item" href="elemento">Tipos de Elementos</a>
+                <a class="dropdown-item" href="NuevoElemento">Nuevo Elemento</a>
+                <a class="dropdown-item" href="ModificaElemento">Modifica Elemento</a>
+                <a class="dropdown-item" href="EliminaElemento">Elimina Elemento</a>
               </div>
             </li>
+            
             
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

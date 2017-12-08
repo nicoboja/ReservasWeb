@@ -35,10 +35,28 @@ public class Inicio extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String pagina = "/index.jsp";
-		request.getSession().getAttribute("usuario");
-		request.getSession().getAttribute("listares");
-		request.getRequestDispatcher(pagina).forward(request, response);
+		System.out.println(" GET -INICIO");
+		String pagina = "/home.jsp";
+		HttpSession session = request.getSession();
+		try {
+			if(session.getAttribute("usuario")!=null) {
+				System.out.println("sesion iniciada");
+				Persona per = new Persona();
+				per = (Persona)session.getAttribute("usuario");
+				CtrlABMReserva ctrlRes = new CtrlABMReserva();
+				ArrayList<Reserva> listaRes = ctrlRes.getById(per.getId());
+				request.setAttribute("listares", listaRes );
+				
+				
+			}else{
+				pagina = "/login.jsp";
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		RequestDispatcher dispatcher =  getServletContext().getRequestDispatcher(pagina);
+		dispatcher.forward(request, response);  
 		
 	}
 

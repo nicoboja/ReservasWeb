@@ -34,7 +34,7 @@
                                <%=session.getAttribute("aviso")%>
        						 </div> 
     					<%}%>
-                          <form class="form-persona" name="idTipo" action="Elemento" method="get">
+                          <form class="form-persona" name="idTipo" action="TipoElementos" method="get">
                         	 	<label>Buscar ID</label>
         	           		    <div class="input-group">
                        		 		<input class="form-control input-sm" type="number"  name="idTipo" id="iTipo" autofocus>
@@ -73,7 +73,7 @@
                   	<%} %>	
                   	
                   	<%if(session.getAttribute("tipo")!=null && session.getAttribute("nuevo")==null){ %>	
-                    	<form class="form-persona" name="idTipo" action="Elemento" method="post">
+                    	<form class="form-persona" name="idTipo" action="TipoElementos" method="post">
                         <div class="col-lg-6">
                         	<div class="form-group">
                         		<label>Id Tipo Elemento</label>

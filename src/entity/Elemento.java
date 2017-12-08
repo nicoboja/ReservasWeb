@@ -36,6 +36,9 @@ public class Elemento {
 
 	
 	public Elemento(){}
+	public Elemento(int id){
+		this.id = id;
+	}
 	
 
 	
