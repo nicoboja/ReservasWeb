@@ -1,13 +1,13 @@
 package data;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import entity.Categoria;
-import entity.Reserva;
+import entity.Elemento;
 import entity.Reserva;
 import util.AppDataException;
 
@@ -26,22 +26,17 @@ public class DataReserva {
 			stmt.setInt(6, r.getPer().getId());
 			stmt.setString(7, r.getEstado());
 			stmt.executeUpdate();
-		}catch (Exception ex){
-			System.out.println("No se ha cargado un elemento");
-			throw ex;
+		
+		}catch (SQLException e) {
+			throw new AppDataException(e,"No es posible agregar reserva en la BD");	
+		
 		}finally{
-			FactoryConexion.getInstancia().releaseConn();
-		}			
+		FactoryConexion.getInstancia().releaseConn();
+		}		
 	}
 
-
-	public Reserva getById(Reserva r) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 	public ArrayList<Reserva> getById(int idPers) throws Exception {
-		System.out.println("dataReserva!");
+		System.out.println("DATOS ARRAY RESERVA");
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
 		Reserva r=null;
@@ -53,19 +48,22 @@ public class DataReserva {
 			if(rs!=null){
 				while(rs.next()){
 					r=new Reserva();
+					r.setElem(new Elemento());
 					r.setId(rs.getInt("idR"));
 					r.setFecha(rs.getDate("fecha"));
 					r.setHora(rs.getTime("hora"));
 					r.setDetalle(rs.getString("detalle"));
 					r.setCantHoras(rs.getInt("cantHoras"));
 					r.setEstado(rs.getString("estado"));
-//					r.getElem().setNombre(rs.getString("nombre"));
-//					r.getElem().setDescrip(rs.getString("descrip"));
+					r.getElem().setNombre(rs.getString("nombre"));
+					r.getElem().setDescrip(rs.getString("descripcion"));
 					revs.add(r);
 				}
 			}
-		} catch (Exception e) {
+		}catch (SQLException e) {
 			e.printStackTrace();
+			throw new AppDataException(e,"No es posible recuperar reservas de la persona de la BD");
+			
 		} finally{
 			try {
 				if(rs!=null)rs.close();
@@ -78,30 +76,89 @@ public class DataReserva {
 		return revs;
 	}
 
-	public void delete(Reserva r) {
-		// TODO Auto-generated method stub
-	}
-
-	public void update(Reserva r) {
-		// TODO Auto-generated method stub
-	}
-	
 	public void cancelRes(Reserva r) throws Exception{
 		PreparedStatement stmt=null;
 		try{
 			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
 					"update reserva set estado='Cancelado' where idR=?;");
-			stmt.setInt(1, r.getId());
+			stmt.setInt(1, r.getId());			
+			stmt.executeUpdate();		
 			
-			stmt.execute();		
-			System.out.println("Se Cancelo la Reserva con ID= "+r.getId());
-		}catch (Exception e1) {
-			System.out.println("Ha fallado la cancelacion de reserva");
-			throw e1;
+		}catch (SQLException e) {
+			throw new AppDataException(e,"No es posible cancelar reserva en la BD");
+	
 		}finally{
 			FactoryConexion.getInstancia().releaseConn();
-		}
+		}		
 	}
+	
+	public int getTotalByTipo(Reserva r) throws Exception{
+		int cant=0;
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		try {
+			stmt = FactoryConexion.getInstancia().getConn().prepareStatement(
+					"select count(*) cant from reserva r inner join elemento e on r.idElemento=e.idE inner join tipoelemento t on e.idT=t.idT"
+					+ "where t.idT=? and fecha > CURRENT_TIMESTAMP() AND r.estado='Pendiente' AND r.idPersona = ?;");
+			stmt.setInt(1, r.getElem().getTipoElem().getIdT());
+			stmt.setInt(2, r.getPer().getId());
+			rs = stmt.executeQuery();
+			if(rs!=null){
+				while(rs.next()){
+					cant = rs.getInt("cant");
+				}	
+			}
+		} catch (SQLException e) {
+			throw new AppDataException(e,"No es posible obtener las reserva");	
+			
+		} catch (Exception e) {
+			throw e;
+		
+		}finally{
+			try {
+				if(rs!=null)rs.close();
+				if(stmt!=null)stmt.close();
+				FactoryConexion.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				throw e;
+			}		
+		}
+		return cant;
+	}
+	
+	public Date getFecActual() throws Exception{
+		Statement stmt=null;
+		ResultSet rs=null;
+		java.sql.Date fecActual = null;
+		
+		try {
+			stmt = FactoryConexion.getInstancia().getConn().createStatement();
+			rs = stmt.executeQuery("SELECT CURDATE();");					
+			if(rs!=null){
+				while(rs.next()){
+					fecActual=(rs.getDate("CURDATE()"));
+				}
+			}				
+		}catch (SQLException e) {
+			throw new AppDataException(e,"No es posible recuperar fecha de la BD");
+	
+		} finally{
+			try {
+				if(rs!=null)rs.close();
+				if(stmt!=null)stmt.close();
+				FactoryConexion.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				throw e;
+			}
+		}		
+		return fecActual;
+	}
+	
+	public Reserva getById(Reserva r) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 }

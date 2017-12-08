@@ -80,12 +80,15 @@ public class Inicio extends HttpServlet {
 				
 				CtrlABMPersona ctrlPer= new CtrlABMPersona();
 				plog=ctrlPer.login(per);
+				
 				if (plog != null) {
+					System.out.println("diferente a nulo");
 					if (plog.isHabilitado()) {
-						
+						System.out.println("habilitado");
 						session.setAttribute("usuario", plog);
 						CtrlABMReserva ctrlRes = new CtrlABMReserva();
 						ArrayList<Reserva> listaRes = ctrlRes.getById(plog.getId());
+						listaRes.get(1).getDetalle();
 						request.setAttribute("listares", listaRes );
 					}else{
 						request.setAttribute("error", "Error: <b>"+plog.getUss()+"<b> no esta <b>Habilitado</b>");
@@ -107,8 +110,10 @@ public class Inicio extends HttpServlet {
 			
 			} catch (AppDataException e) {
 				request.setAttribute("error", "Error: "+e);
+				pagina = "/login.jsp";
 			} catch (Exception e) {
-				e.printStackTrace();
+				request.setAttribute("error", "Error: "+e);
+				pagina = "/login.jsp";
 			}
 		
 			System.out.println("#############INGRESO##############");

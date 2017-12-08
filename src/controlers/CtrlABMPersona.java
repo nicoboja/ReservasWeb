@@ -6,13 +6,13 @@ import data.DataCategoria;
 import data.DataPersona;
 import entity.Categoria;
 import entity.Persona;
+import util.AppDataException;
 
 public class CtrlABMPersona {
 
 
 	private DataPersona dataPer;
 	private DataCategoria dataCat;
-	
 	private ArrayList<Persona> pers;
 	
 	public CtrlABMPersona(){
@@ -21,33 +21,45 @@ public class CtrlABMPersona {
 		pers= new ArrayList<Persona>();
 	}
 	
-	public void add(Persona p) throws Exception{
-		dataPer.add(p);
+	public void add(Persona p) throws Exception {
+		if(p.getDni().length()!=0){
+			try{
+				dataPer.add(p);			}
+			catch (Exception e){
+				throw new AppDataException(e,"persona");
+			}
+		}else{
+			throw new Exception("DNI erroneo");
+		}		
 	}
 	
 	public void delete(Persona p)throws Exception{
-		dataPer.remove(p);		
-	}
-	public Persona login(Persona per) throws Exception{
-		return dataPer.getLogedUser(per);
+		try{
+			dataPer.remove(p);
+		}catch (Exception e) {
+			throw new AppDataException(e,"persona");
+		}				
 	}
 	
+	public void update(Persona p)throws Exception{
+		if(p.getDni().length()!=0){
+			try{
+				dataPer.update(p);			}
+			catch (Exception e){
+				throw new AppDataException(e,"persona");
+			}
+		}else{
+			throw new Exception("DNI erroneo");
+		}	
+	}
+
+	public Persona login(Persona per) throws Exception{
+		return dataPer.getLogedUser(per);
+	}	
 	
 	public Persona getByUss(Persona p) throws Exception{
 		return dataPer.getByUss(p);
-	}
-	
-//	public Persona getByUss(String uss)throws Exception{
-//		Persona p=new Persona();
-//		p.setUss(uss);
-//		return getByUss(p);
-//	}
-	
-	
-
-	public void update(Persona p)throws Exception{
-		dataPer.update(p);
-	}
+	}	
 	
 	public Persona getByDni(Persona p) throws Exception{
 		return this.dataPer.getByDni(p);
@@ -59,16 +71,6 @@ public class CtrlABMPersona {
 		return getByDni(p);
 	}
 	
-/*	public Persona getByNombreApellido(Persona p){
-		for (int i=0; i < this.pers.size(); i++){
-			if(pers.get(i).getNombre().equalsIgnoreCase(p.getNombre())
-				&& pers.get(i).getApellido().equalsIgnoreCase(p.getApellido())) {
-				return pers.get(i);		
-			}
-		}
-		return null; 
-	}*/
-	
 	public ArrayList<Persona> getAll()throws Exception{
 		return dataPer.getAll();
 	}
@@ -76,8 +78,8 @@ public class CtrlABMPersona {
 	public ArrayList<Categoria> getCategorias() throws Exception{
 		return dataCat.getAll();
 	}
+	
 	public Categoria getCat(int c) throws Exception{
-		System.out.println("Ctrl getcat");
 		return dataCat.getById(c);
 	}
 	

@@ -2,9 +2,6 @@ package data;
 
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
-
-import java.security.KeyStore.ProtectionParameter;
 import java.sql.*;
 
 import entity.*;
@@ -12,10 +9,73 @@ import util.AppDataException;
 
 public class DataPersona {
 	
+	public void add(Persona p) throws Exception{
+		PreparedStatement stmt=null;
+		try {
+			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
+					"insert into persona(dni, nombre, apellido, habilitado, idC) values (?,?,?,?,?)");
+			stmt.setString(1, p.getDni());
+			stmt.setString(2, p.getNombre());
+			stmt.setString(3, p.getApellido());
+			stmt.setBoolean(4, p.isHabilitado());
+			stmt.setInt(5, p.getCategoria().getId());
+			stmt.executeUpdate();
+			
+		}catch (SQLException e) {
+			throw new AppDataException(e,"No es posible agregar la persona en la BD");	
+		
+		}catch (AppDataException e){
+		throw e;
+		
+		}finally{
+			FactoryConexion.getInstancia().releaseConn();
+		}		
+	}
+	
+	public void remove(Persona p) throws Exception {
+		PreparedStatement stmt=null;
+		try{
+			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
+					"delete from persona where idP=?");
+			stmt.setInt(1, p.getId());
+			stmt.executeUpdate();		
 
+		}catch (SQLException e) {
+			throw new AppDataException(e,"No es posible eliminar el elemento en la BD");
 	
-	public ArrayList<Persona> getAll() throws Exception{
+		}catch (AppDataException e){
+			throw e;
 	
+		}finally{
+			FactoryConexion.getInstancia().releaseConn();
+		}		
+	}
+	
+	public void update(Persona p) throws Exception {
+		PreparedStatement stmt=null;
+		try{
+			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
+					"update persona set dni=?,nombre=?, apellido=?,habilitado=?, idC=? where idP=?;");
+			stmt.setString(1, p.getDni());
+			stmt.setString(2, p.getNombre());
+			stmt.setString(3, p.getApellido());
+			stmt.setBoolean(4, p.isHabilitado());
+			stmt.setInt(5, p.getCategoria().getId());
+			stmt.setInt(6, p.getId());
+			stmt.execute();		
+			
+		}catch (SQLException e) {
+			throw new AppDataException(e,"No es posible modificar persona en la BD");
+	
+		}catch (AppDataException e){
+			throw e;
+			
+		}finally{
+			FactoryConexion.getInstancia().releaseConn();
+		}	
+	}
+	
+	public ArrayList<Persona> getAll() throws Exception{	
 		Statement stmt=null;
 		ResultSet rs=null;
 		ArrayList<Persona> pers= new ArrayList<Persona>();
@@ -38,25 +98,21 @@ public class DataPersona {
 					pers.add(p);
 				}
 			}
-		} catch (SQLException e) {
-			
+		}catch (SQLException e) {
+			throw new AppDataException(e,"No es posible recuperar personas de la BD");
+	
+		}catch (AppDataException e){
 			throw e;
-		} catch (AppDataException ade){
-			throw ade;
-		}
 		
-
-		try {
+		}try {
 			if(rs!=null) rs.close();
 			if(stmt!=null) stmt.close();
 			FactoryConexion.getInstancia().releaseConn();
+		
 		} catch (SQLException e) {
-			
-			e.printStackTrace();
-		}
-		
-		return pers;
-		
+			throw e;
+		}		
+		return pers;		
 	}
 	
 	public Persona getByDni(Persona per) throws Exception{
@@ -79,17 +135,19 @@ public class DataPersona {
 					p.getCategoria().setId(rs.getInt("idC"));
 					p.getCategoria().setDescripcion(rs.getString("nivel"));
 			}
-			
-		} catch (Exception e) {
+		}catch (SQLException e) {
+			throw new AppDataException(e,"No es posible recuperar personas de la BD");
+	
+		}catch (AppDataException e){
 			throw e;
-		} finally{
-			try {
-				if(rs!=null)rs.close();
-				if(stmt!=null)stmt.close();
-				FactoryConexion.getInstancia().releaseConn();
-			} catch (SQLException e) {
-				throw e;
-			}
+		
+		}try {
+			if(rs!=null) rs.close();
+			if(stmt!=null) stmt.close();
+			FactoryConexion.getInstancia().releaseConn();
+		
+		} catch (SQLException e) {
+			throw e;
 		}
 		return p;
 	}
@@ -117,88 +175,22 @@ public class DataPersona {
 					p.setUss(rs.getString("usuario"));
 			}
 			
-		} catch (Exception e) {
+		}catch (SQLException e) {
+			throw new AppDataException(e,"No es posible recuperar personas de la BD");
+	
+		}catch (AppDataException e){
 			throw e;
-		} finally{
-			try {
-				if(rs!=null)rs.close();
-				if(stmt!=null)stmt.close();
-				FactoryConexion.getInstancia().releaseConn();
-			} catch (SQLException e) {
-				throw e;
-			}
+		
+		}try {
+			if(rs!=null) rs.close();
+			if(stmt!=null) stmt.close();
+			FactoryConexion.getInstancia().releaseConn();
+		
+		} catch (SQLException e) {
+			throw e;
 		}
 		return p;
-	}
-	
-	public void remove(Persona p) throws Exception {
-		PreparedStatement stmt=null;
-		try{
-			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
-					"delete from persona where idP=?");
-			stmt.setInt(1, p.getId());
-			stmt.executeUpdate();		
-			System.out.println("Se borro la Persona con ID= "+p.getId()+" Nombre: "+p.getNombre());
-		}catch (Exception e1) {
-			System.out.println("Ha fallado el borrado de datos");
-			throw e1;
-		}finally{
-			FactoryConexion.getInstancia().releaseConn();
-		}		
-	}
-	
-	public void update(Persona p) throws Exception {
-		PreparedStatement stmt=null;
-		try{
-			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
-					"update persona set dni=?,nombre=?, apellido=?,habilitado=?, idC=? where idP=?;");
-			stmt.setString(1, p.getDni());
-			stmt.setString(2, p.getNombre());
-			stmt.setString(3, p.getApellido());
-			stmt.setBoolean(4, p.isHabilitado());
-			stmt.setInt(5, p.getCategoria().getId());
-			stmt.setInt(6, p.getId());
-			stmt.execute();		
-			System.out.println("Se Modifico la Persona con ID= "+p.getId()+" Nombre: "+p.getNombre());
-		}catch (Exception e1) {
-			System.out.println("Ha fallado el borrado de datos");
-			throw e1;
-		}finally{
-			FactoryConexion.getInstancia().releaseConn();
-		}		
-	}
-	
-	public void add(Persona p) throws Exception{
-		PreparedStatement stmt=null;
-		ResultSet keyResultSet=null;
-		try {
-			stmt=FactoryConexion.getInstancia().getConn()
-					.prepareStatement(
-					"insert into persona(dni, nombre, apellido, habilitado, idC) values (?,?,?,?,?)",
-					PreparedStatement.RETURN_GENERATED_KEYS
-					);
-			stmt.setString(1, p.getDni());
-			stmt.setString(2, p.getNombre());
-			stmt.setString(3, p.getApellido());
-			stmt.setBoolean(4, p.isHabilitado());
-			stmt.setInt(5, p.getCategoria().getId());
-			stmt.executeUpdate();
-			//??
-			keyResultSet=stmt.getGeneratedKeys();
-			if(keyResultSet!=null && keyResultSet.next()){
-				p.setId(keyResultSet.getInt(1));
-			}
-		} catch (SQLException | AppDataException e) {
-			throw e;
-		}
-		try {
-			if(keyResultSet!=null)keyResultSet.close();
-			if(stmt!=null)stmt.close();
-			FactoryConexion.getInstancia().releaseConn();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
+	}	
 
 	public Persona getLogedUser(Persona per) throws Exception{
 		Persona p=null;
@@ -221,24 +213,22 @@ public class DataPersona {
 					p.setHabilitado(rs.getBoolean("habilitado"));
 					p.setUss(rs.getString("usuario"));
 					p.getCategoria().setId(rs.getInt("idC"));
-					p.getCategoria().setDescripcion(rs.getString("nivel"));
-					
-			}
-			
-		} catch (Exception e) {
+					p.getCategoria().setDescripcion(rs.getString("nivel"));					
+			}			
+		}catch (SQLException e) {
+			throw new AppDataException(e,"No es posible recuperar personas de la BD");
+	
+		}catch (AppDataException e){
 			throw e;
-		} finally{
-			try {
-				if(rs!=null)rs.close();
-				if(stmt!=null)stmt.close();
-				FactoryConexion.getInstancia().releaseConn();
-			} catch (SQLException e) {
-				throw e;
-			}
+		
+		}try {
+			if(rs!=null) rs.close();
+			if(stmt!=null) stmt.close();
+			FactoryConexion.getInstancia().releaseConn();
+		
+		} catch (SQLException e) {
+			throw e;
 		}
 		return p;
 	}
-	
-	
-
 }
