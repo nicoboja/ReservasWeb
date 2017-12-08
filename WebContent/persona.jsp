@@ -120,7 +120,7 @@
                           	<label>Estado</label>
                             	<div class="checkbox" >
                                    <label>
-                                     <input type="checkbox" id="habilitado" name="habilitado">Habilitado
+                                     <input class="form-control" type="checkbox" id="habilita" name="habilita" value="true" checked>Habilitado
                                    </label>
                                 </div>
                                 </div>
@@ -128,7 +128,7 @@
                     <div class="col-lg-6">
                 		<div class="form-group">
                           <label>Usuario</label>
-                          	<input class="form-control" type="text" name="usuario" id="usuario" >
+                          	<input class="form-control" type="text" name="uss" id="uss" >
                         </div>
                         <div class="form-group">
                           <label>Contraseña</label>

@@ -49,7 +49,7 @@ public class Persona extends HttpServlet {
 				
 				if(request.getParameter("dni")!=null){
 					String dni=request.getParameter("dni");
-					System.out.println("parametro "+dni);
+					
 					entity.Persona perdni = new entity.Persona();
 					perdni = ctrlPer.getByDni(dni);
 					
@@ -88,33 +88,40 @@ public class Persona extends HttpServlet {
 				
 				System.out.println("DNIFORM: "+request.getParameter("dniform"));
 				System.out.println("NOMBRE: "+request.getParameter("nombre"));
+				
 				if(!request.getParameter("dniform").isEmpty()){
 					
 					String dni=request.getParameter("dniform");
 					System.out.println("parametro "+dni);
 					
 					entity.Persona perdni = new entity.Persona();
-					entity.Persona perform = new entity.Persona();
+					
 					System.out.println(request.getParameter("categoria"));
 					int idcat = Integer.parseInt(request.getParameter("categoria"));
-					System.out.println(idcat);
-					Categoria cat = new Categoria();
-					cat = ctrlPer.getCat(idcat);
+					
+				//	System.out.println(idcat);
 					
 					
-					System.out.println(cat.getDescripcion());
 					
-					perform.setApellido(request.getParameter("apellido"));
+					entity.Persona perform = new entity.Persona();
+					perform.setCategoria(new Categoria());
+					perform.getCategoria().setId(idcat);
 					perform.setDni(request.getParameter("dniform"));
-					
-					
-					perform.setCategoria(cat);
 					perform.setNombre(request.getParameter("nombre"));
-					perform.setUss(request.getParameter("usuario"));
+					perform.setApellido(request.getParameter("apellido"));
+					perform.setUss(request.getParameter("uss"));
 					perform.setPass(request.getParameter("pass"));
 					
+					if (request.getParameter("habilita").equals("true")) {
+						perform.setHabilitado(true);
+					}else{
+						perform.setHabilitado(false);
+					}
+					
 					perdni = ctrlPer.getByDni(dni);
-					System.out.println(perdni.getApellido());
+					
+					//System.out.println(perdni.getApellido());
+					
 					if(perdni==null){
 						System.out.println("NUEVO");
 						try {
@@ -126,6 +133,7 @@ public class Persona extends HttpServlet {
 							e.printStackTrace();
 						}
 					}else{
+						
 					try {
 						perform.setId(perdni.getId());
 						System.out.println("MODIFICAR");
@@ -140,6 +148,7 @@ public class Persona extends HttpServlet {
 						
 					}
 				}
+					
 					
 					ArrayList<entity.Persona> listaper = ctrlPer.getAll();
 					request.setAttribute("listaper", listaper);

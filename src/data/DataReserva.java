@@ -60,7 +60,7 @@ public class DataReserva {
 					revs.add(r);
 				}
 			}
-		}catch (SQLException e) {
+		}catch (SQLException  | AppDataException e) {
 			e.printStackTrace();
 			throw new AppDataException(e,"No es posible recuperar reservas de la persona de la BD");
 			
@@ -70,7 +70,7 @@ public class DataReserva {
 				if(stmt!=null)stmt.close();
 				FactoryConexion.getInstancia().releaseConn();
 			} catch (SQLException e) {
-				throw e;
+				e.printStackTrace();
 			}
 		}
 		return revs;
