@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import controlers.CtrlABMPersona;
 import entity.Categoria;
+import util.AppDataException;
 
 /**
  * Servlet implementation class Persona
@@ -105,7 +106,8 @@ public class Persona extends HttpServlet {
 					
 					perform.setApellido(request.getParameter("apellido"));
 					perform.setDni(request.getParameter("dniform"));
-					perform.setHabilitado(true);
+					
+					
 					perform.setCategoria(cat);
 					perform.setNombre(request.getParameter("nombre"));
 					perform.setUss(request.getParameter("usuario"));
@@ -116,11 +118,12 @@ public class Persona extends HttpServlet {
 					if(perdni==null){
 						System.out.println("NUEVO");
 						try {
-							System.out.println("MODIFICAR");
 							ctrlPer.add(perform);
 							
+						} catch (AppDataException e) {
+							request.setAttribute("error", "Error: "+e);
 						} catch (Exception e) {
-							// TODO: handle exception
+							e.printStackTrace();
 						}
 					}else{
 					try {
@@ -128,10 +131,11 @@ public class Persona extends HttpServlet {
 						System.out.println("MODIFICAR");
 						ctrlPer.update(perform);	
 						
+					} catch (AppDataException e) {
+						request.setAttribute("error", "Error: "+e);
 					} catch (Exception e) {
-						// TODO: handle exception - Pagina de Error
-						System.out.println("CATCH");
-					}	
+						e.printStackTrace();
+					}
 					
 						
 					}
@@ -145,8 +149,10 @@ public class Persona extends HttpServlet {
 				pagina = "/login.jsp";	
 			}
 			
+		} catch (AppDataException e) {
+			request.setAttribute("error", "Error: "+e);
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 		RequestDispatcher dispatcher =  getServletContext().getRequestDispatcher(pagina);
 		dispatcher.forward(request, response);  

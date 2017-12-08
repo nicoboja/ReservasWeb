@@ -120,7 +120,7 @@
                           	<label>Estado</label>
                             	<div class="checkbox" >
                                    <label>
-                                     <input type="checkbox" value="true" id="habilitado" name="habilitado">Habilitado
+                                     <input type="checkbox" id="habilitado" name="habilitado">Habilitado
                                    </label>
                                 </div>
                                 </div>
