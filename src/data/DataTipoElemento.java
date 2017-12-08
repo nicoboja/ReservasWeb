@@ -96,11 +96,11 @@ public class DataTipoElemento {
 			if(rs!=null && rs.next()){
 					tipoElem.setIdT(rs.getInt("idT"));
 					tipoElem.setDescripcion(rs.getString("descripcion"));
-					tipoElem.setCantMax(rs.getInt("tmax"));
+					tipoElem.setCantMax(rs.getInt("maxPend"));
 					tipoElem.setDiasMaxAnt(rs.getInt("diasant"));
 			}
 		}catch (SQLException | AppDataException e) {
-			throw new AppDataException(e,"No es posible recuperar el elemento de la BD");
+			throw new AppDataException(e,"No es posible recuperar el Tipo de Elemento de la BD");
 			
 		}finally{
 			try{

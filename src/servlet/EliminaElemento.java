@@ -77,7 +77,9 @@ public class EliminaElemento extends HttpServlet {
 				CtrlABMElemento ctrlElem = new CtrlABMElemento();
 				Elemento e = new Elemento();
 				e.setId(idE);
+				
 				System.out.println("SERVLET ID E: "+e.getId());
+				
 				ctrlElem.delete(e);
 				
 				request.setAttribute("aviso", "Se elimino el elemento: <b>"+nom+"</b>");
