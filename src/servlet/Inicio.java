@@ -15,6 +15,7 @@ import controlers.CtrlABMPersona;
 import controlers.CtrlABMReserva;
 import entity.Persona;
 import entity.Reserva;
+import util.AppDataException;
 
 /**
  * Servlet implementation class Inicio
@@ -67,41 +68,54 @@ public class Inicio extends HttpServlet {
 		String pagina = "/home.jsp";
 		HttpSession session = request.getSession();
 		try {
-			String user=request.getParameter("user");
-			String pass=request.getParameter("pass");
-			
-			if(user!=null){
+				String user=request.getParameter("user");
+				String pass=request.getParameter("pass");
+			if (user!=null) {
 				Persona per=new Persona();
-				Persona pers=new Persona();
-				pers= null;
 				per.setUss(user);
 				per.setPass(pass);
-				session.setAttribute("error", null);
+				
+				Persona plog=new Persona();
+				plog= null;
+				
 				CtrlABMPersona ctrlPer= new CtrlABMPersona();
-				
-				pers=ctrlPer.login(per);
-				if (pers == null) {
-					session.setAttribute("usuario", null);
-					session.setAttribute("error", true);
-					pagina = "/login.jsp";
-					}else{
-						CtrlABMReserva ctrlRes = new CtrlABMReserva();
-						ArrayList<Reserva> listaRes = ctrlRes.getById(pers.getId());
-						System.out.println("ID usuario ingreso: "+pers.getId());
-						System.out.println("Reservas: "+listaRes.get(1).getDetalle());
+				plog=ctrlPer.login(per);
+				if (plog != null) {
+					if (plog.isHabilitado()) {
 						
-						session.setAttribute("usuario", pers);
+						session.setAttribute("usuario", plog);
+						CtrlABMReserva ctrlRes = new CtrlABMReserva();
+						ArrayList<Reserva> listaRes = ctrlRes.getById(plog.getId());
 						request.setAttribute("listares", listaRes );
+					}else{
+						request.setAttribute("error", "Error: <b>"+plog.getUss()+"<b> no esta <b>Habilitado</b>");
+						session.setAttribute("usuario", null);
+						pagina = "/login.jsp";
 					}
-				
+					
+				}else{
+					request.setAttribute("error", "Error: Usuario o Contraseña incorrecta!");
+					session.setAttribute("usuario", null);
+					pagina = "/login.jsp";
 				}
-			} catch (Exception e) {
-				// TODO: handle exception ERROR EN LA BD
+				
+			}else{
+				request.setAttribute("error", "Error: Ingrese Usuario y Contraseña");
+				session.setAttribute("usuario", null);
+				pagina = "/login.jsp";
 			}
+			
+			} catch (AppDataException e) {
+				request.setAttribute("error", "Error: "+e);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		
 			System.out.println("#############INGRESO##############");
 			
 			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(pagina);
-	        dispatcher.forward(request, response);  
+	        dispatcher.forward(request, response); 
+		
 	}
 }
 

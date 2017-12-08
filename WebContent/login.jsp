@@ -27,11 +27,10 @@ function carga() {
     	</div>
     </div>
     <div id="center">
-    <%if(session.getAttribute("error")!=null){%>
+    <%if(request.getAttribute("error")!=null){%>
     	<div class="alert alert-danger">
         	<button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
-          
-                               Usuario o Contraseña incorrecta
+          <%=request.getAttribute("error") %>
         </div> 
     <%}%>
     	<form class="form-signin" name="signin" action="/ReservasWeb/inicio" method="post">
