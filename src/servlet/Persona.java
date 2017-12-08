@@ -99,10 +99,6 @@ public class Persona extends HttpServlet {
 					System.out.println(request.getParameter("categoria"));
 					int idcat = Integer.parseInt(request.getParameter("categoria"));
 					
-				//	System.out.println(idcat);
-					
-					
-					
 					entity.Persona perform = new entity.Persona();
 					perform.setCategoria(new Categoria());
 					perform.getCategoria().setId(idcat);
@@ -119,8 +115,6 @@ public class Persona extends HttpServlet {
 					}
 					
 					perdni = ctrlPer.getByDni(dni);
-					
-					//System.out.println(perdni.getApellido());
 					
 					if(perdni==null){
 						System.out.println("NUEVO");

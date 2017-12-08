@@ -13,23 +13,26 @@ public class DataPersona {
 		PreparedStatement stmt=null;
 		try {
 			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
-					"insert into persona(dni, nombre, apellido, habilitado, idC) values (?,?,?,?,?)");
+					"insert into persona(dni, nombre, apellido, habilitado, idC, usuario, contra) values (?,?,?,?,?,?,?)");
 			stmt.setString(1, p.getDni());
 			stmt.setString(2, p.getNombre());
 			stmt.setString(3, p.getApellido());
 			stmt.setBoolean(4, p.isHabilitado());
 			stmt.setInt(5, p.getCategoria().getId());
+			stmt.setString(6, p.getUss());
+			stmt.setString(7, p.getPass());
 			stmt.executeUpdate();
 			
-		}catch (SQLException e) {
-			throw new AppDataException(e,"No es posible agregar la persona en la BD");	
-		
-		}catch (AppDataException e){
-		throw e;
-		
+		}catch (SQLException | AppDataException e) {
+			throw new AppDataException(e,"No es posible agregar la persona en la BD");
+			
 		}finally{
-			FactoryConexion.getInstancia().releaseConn();
-		}		
+			try{
+				FactoryConexion.getInstancia().releaseConn();
+			}catch (SQLException e) {
+				e.printStackTrace();	
+			}
+		} 				
 	}
 	
 	public void remove(Persona p) throws Exception {
@@ -40,15 +43,16 @@ public class DataPersona {
 			stmt.setInt(1, p.getId());
 			stmt.executeUpdate();		
 
-		}catch (SQLException e) {
-			throw new AppDataException(e,"No es posible eliminar el elemento en la BD");
-	
-		}catch (AppDataException e){
-			throw e;
-	
+		}catch (SQLException | AppDataException e) {
+			throw new AppDataException(e,"No es posible eliminar la persona de la BD");
+			
 		}finally{
-			FactoryConexion.getInstancia().releaseConn();
-		}		
+			try{
+				FactoryConexion.getInstancia().releaseConn();
+			}catch (SQLException e) {
+				e.printStackTrace();	
+			}
+		} 	
 	}
 	
 	public void update(Persona p) throws Exception {
@@ -63,16 +67,17 @@ public class DataPersona {
 			stmt.setInt(5, p.getCategoria().getId());
 			stmt.setInt(6, p.getId());
 			stmt.execute();		
-			
-		}catch (SQLException e) {
-			throw new AppDataException(e,"No es posible modificar persona en la BD");
-	
-		}catch (AppDataException e){
-			throw e;
+		
+		}catch (SQLException | AppDataException e) {
+			throw new AppDataException(e,"No es posible modificar la persona en la BD");
 			
 		}finally{
-			FactoryConexion.getInstancia().releaseConn();
-		}	
+			try{
+				FactoryConexion.getInstancia().releaseConn();
+			}catch (SQLException e) {
+				e.printStackTrace();	
+			}
+		} 
 	}
 	
 	public ArrayList<Persona> getAll() throws Exception{	
@@ -98,20 +103,18 @@ public class DataPersona {
 					pers.add(p);
 				}
 			}
-		}catch (SQLException e) {
+		}catch (SQLException | AppDataException e) {
 			throw new AppDataException(e,"No es posible recuperar personas de la BD");
-	
-		}catch (AppDataException e){
-			throw e;
-		
-		}try {
-			if(rs!=null) rs.close();
-			if(stmt!=null) stmt.close();
-			FactoryConexion.getInstancia().releaseConn();
-		
-		} catch (SQLException e) {
-			throw e;
-		}		
+			
+		}finally{
+			try{
+				if(rs!=null) rs.close();
+				if(stmt!=null) stmt.close();
+				FactoryConexion.getInstancia().releaseConn();
+			}catch (SQLException e) {
+				e.printStackTrace();	
+			}
+		} 
 		return pers;		
 	}
 	
@@ -135,20 +138,18 @@ public class DataPersona {
 					p.getCategoria().setId(rs.getInt("idC"));
 					p.getCategoria().setDescripcion(rs.getString("nivel"));
 			}
-		}catch (SQLException e) {
-			throw new AppDataException(e,"No es posible recuperar personas de la BD");
-	
-		}catch (AppDataException e){
-			throw e;
-		
-		}try {
-			if(rs!=null) rs.close();
-			if(stmt!=null) stmt.close();
-			FactoryConexion.getInstancia().releaseConn();
-		
-		} catch (SQLException e) {
-			throw e;
-		}
+		}catch (SQLException | AppDataException e) {
+			throw new AppDataException(e,"No es posible recuperar la persona de la BD");
+			
+		}finally{
+			try{
+				if(rs!=null) rs.close();
+				if(stmt!=null) stmt.close();
+				FactoryConexion.getInstancia().releaseConn();
+			}catch (SQLException e) {
+				e.printStackTrace();	
+			}
+		} 
 		return p;
 	}
 	
@@ -175,20 +176,18 @@ public class DataPersona {
 					p.setUss(rs.getString("usuario"));
 			}
 			
-		}catch (SQLException e) {
-			throw new AppDataException(e,"No es posible recuperar personas de la BD");
-	
-		}catch (AppDataException e){
-			throw e;
-		
-		}try {
-			if(rs!=null) rs.close();
-			if(stmt!=null) stmt.close();
-			FactoryConexion.getInstancia().releaseConn();
-		
-		} catch (SQLException e) {
-			throw e;
-		}
+		}catch (SQLException | AppDataException e) {
+			throw new AppDataException(e,"No es posible recuperar la persona de la BD");
+			
+		}finally{
+			try{
+				if(rs!=null) rs.close();
+				if(stmt!=null) stmt.close();
+				FactoryConexion.getInstancia().releaseConn();
+			}catch (SQLException e) {
+				e.printStackTrace();	
+			}
+		} 
 		return p;
 	}	
 
@@ -215,20 +214,18 @@ public class DataPersona {
 					p.getCategoria().setId(rs.getInt("idC"));
 					p.getCategoria().setDescripcion(rs.getString("nivel"));					
 			}			
-		}catch (SQLException e) {
-			throw new AppDataException(e,"No es posible recuperar personas de la BD");
-	
-		}catch (AppDataException e){
-			throw e;
-		
-		}try {
-			if(rs!=null) rs.close();
-			if(stmt!=null) stmt.close();
-			FactoryConexion.getInstancia().releaseConn();
-		
-		} catch (SQLException e) {
-			throw e;
-		}
+		}catch (SQLException | AppDataException e) {
+			throw new AppDataException(e,"No es posible recuperar usuario de la BD");
+			
+		}finally{
+			try{
+				if(rs!=null) rs.close();
+				if(stmt!=null) stmt.close();
+				FactoryConexion.getInstancia().releaseConn();
+			}catch (SQLException e) {
+				e.printStackTrace();	
+			}
+		} 
 		return p;
 	}
 }

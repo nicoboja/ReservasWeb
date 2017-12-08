@@ -7,11 +7,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import entity.Categoria;
-
+import util.AppDataException;
 
 public class DataCategoria {
-	public ArrayList<Categoria> getAll() throws Exception{
-		
+	
+	public ArrayList<Categoria> getAll() throws Exception{		
 		Statement stmt=null;
 		ResultSet rs=null;
 		ArrayList<Categoria> cats= new ArrayList<Categoria>();
@@ -27,20 +27,21 @@ public class DataCategoria {
 					cats.add(c);
 				}
 			}
-		} catch (Exception e){
-			throw e;
-		}
-		
-		try {
-			if(rs!=null) rs.close();
-			if(stmt!=null) stmt.close();
-			FactoryConexion.getInstancia().releaseConn();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
+		}catch (SQLException | AppDataException e) {
+			throw new AppDataException(e,"No es posible recuperar las categorias de la BD");
+			
+		}finally{
+			try{
+				if(rs!=null) rs.close();
+				if(stmt!=null) stmt.close();
+				FactoryConexion.getInstancia().releaseConn();
+			}catch (SQLException e) {
+				e.printStackTrace();	
+			}
+		} 
 		return cats;
 	}
+	
 	public Categoria getById(int id) throws Exception{
 		Categoria c=null;
 		PreparedStatement stmt=null;
@@ -55,18 +56,18 @@ public class DataCategoria {
 					c.setDescripcion(rs.getString("nivel"));
 					c.setId(rs.getInt("idC"));
 			}
+		}catch (SQLException | AppDataException e) {
+			throw new AppDataException(e,"No es posible recuperar categoria del usuario de la BD");
 			
-		} catch (Exception e) {
-			throw e;
-		} finally{
-			try {
-				if(rs!=null)rs.close();
-				if(stmt!=null)stmt.close();
+		}finally{
+			try{
+				if(rs!=null) rs.close();
+				if(stmt!=null) stmt.close();
 				FactoryConexion.getInstancia().releaseConn();
-			} catch (SQLException e) {
-				throw e;
+			}catch (SQLException e) {
+				e.printStackTrace();	
 			}
-		}
+		} 
 		return c;
 	}
 }

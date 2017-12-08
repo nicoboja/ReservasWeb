@@ -19,15 +19,17 @@ public class DataTipoElemento {
 			stmt.setString(1, te.getDescripcion());
 			stmt.setInt(2, te.getCantMax());
 			stmt.executeUpdate();
-		}catch (SQLException e) {
-			throw new AppDataException(e,"No es posible agregar tipo elemento en la BD");	
-		
-		}catch (AppDataException e){
-			throw e;
-	
+			
+		}catch (SQLException | AppDataException e) {
+			throw new AppDataException(e,"No es posible agregar tipo de elemento en la BD");
+			
 		}finally{
-			FactoryConexion.getInstancia().releaseConn();
-		}			
+			try{
+				FactoryConexion.getInstancia().releaseConn();
+			}catch (SQLException e) {
+				e.printStackTrace();	
+			}
+		} 		
 	}	
 
 	public void delete(TipoElemento te) throws Exception {
@@ -38,14 +40,16 @@ public class DataTipoElemento {
 			stmt.setInt(1, te.getIdT());
 			stmt.executeUpdate();	
 			
-		}catch (SQLException e) {
-			throw new AppDataException(e,"No es posible eliminar el tipo de elemento de la BD");
-	
-		}catch (AppDataException e){
-			throw e;
+		}catch (SQLException | AppDataException e) {
+			throw new AppDataException(e,"No es posible eliminar el tipo de elemento en la BD");
+			
 		}finally{
-			FactoryConexion.getInstancia().releaseConn();
-		}		
+			try{
+				FactoryConexion.getInstancia().releaseConn();
+			}catch (SQLException e) {
+				e.printStackTrace();	
+			}
+		} 	
 	}
 	
 	public TipoElemento getByNombre(TipoElemento te) throws Exception{
@@ -63,21 +67,19 @@ public class DataTipoElemento {
 					tipoElem.setDescripcion(rs.getString("descripcion"));
 					tipoElem.setCantMax(rs.getInt("tmax"));
 					tipoElem.setDiasMaxAnt(rs.getInt("diasant"));
-			}			
-		}catch (SQLException e) {
-			throw new AppDataException(e,"No es posible recuperar el tipo de elemento de la BD");
-	
-		}catch (AppDataException e){
-			throw e;
-		} finally{
-			try {
-				if(rs!=null)rs.close();
-				if(stmt!=null)stmt.close();
-				FactoryConexion.getInstancia().releaseConn();
-			} catch (SQLException e) {
-				throw e;
 			}
-		}
+		}catch (SQLException | AppDataException e) {
+			throw new AppDataException(e,"No es posible recuperar el tipo de elemento de la BD");
+			
+		}finally{
+			try{
+				if(rs!=null) rs.close();
+				if(stmt!=null) stmt.close();
+				FactoryConexion.getInstancia().releaseConn();
+			}catch (SQLException e) {
+				e.printStackTrace();	
+			}
+		} 
 		return tipoElem;
 	}
 	
@@ -96,21 +98,19 @@ public class DataTipoElemento {
 					tipoElem.setDescripcion(rs.getString("descripcion"));
 					tipoElem.setCantMax(rs.getInt("tmax"));
 					tipoElem.setDiasMaxAnt(rs.getInt("diasant"));
-			}			
-		}catch (SQLException e) {
-			throw new AppDataException(e,"No es posible recuperar el elemento de la BD");
-	
-		}catch (AppDataException e){
-			throw e;
-		} finally{
-			try {
-				if(rs!=null)rs.close();
-				if(stmt!=null)stmt.close();
-				FactoryConexion.getInstancia().releaseConn();
-			} catch (SQLException e) {
-				throw e;
 			}
-		}
+		}catch (SQLException | AppDataException e) {
+			throw new AppDataException(e,"No es posible recuperar el elemento de la BD");
+			
+		}finally{
+			try{
+				if(rs!=null) rs.close();
+				if(stmt!=null) stmt.close();
+				FactoryConexion.getInstancia().releaseConn();
+			}catch (SQLException e) {
+				e.printStackTrace();	
+			}
+		} 
 		return tipoElem;
 	}
 			
@@ -123,15 +123,18 @@ public class DataTipoElemento {
 			stmt.setInt(2, te.getDiasMaxAnt());
 			stmt.setInt(3, te.getCantMax());
 			stmt.setInt(4, te.getIdT());
-			stmt.executeUpdate();					
-		}catch (SQLException e) {
-			throw new AppDataException(e,"No es posible modificar el tipo de elemento en la BD");
-	
-		}catch (AppDataException e){
-			throw e;
+			stmt.executeUpdate();	
+		
+		}catch (SQLException | AppDataException e) {
+			throw new AppDataException(e,"No es posible modificar el tipo de elemento de la BD");
+			
 		}finally{
-			FactoryConexion.getInstancia().releaseConn();
-		}		
+			try{
+				FactoryConexion.getInstancia().releaseConn();
+			}catch (SQLException e) {
+				e.printStackTrace();	
+			}
+		} 		
 	}
 	
 	public ArrayList<TipoElemento> getAll() throws Exception{
@@ -152,20 +155,18 @@ public class DataTipoElemento {
 					tipoelementos.add(tipoElem);
 				}
 			}
-		}catch (SQLException e) {
-			throw new AppDataException(e,"No es posible recuperar el elemento de la BD");
-	
-		}catch (AppDataException e){
-			throw e;
-		
-		}try {
-			if(rs!=null) rs.close();
-			if(stmt!=null) stmt.close();
-			FactoryConexion.getInstancia().releaseConn();
-		} catch (SQLException e) {			
-			e.printStackTrace();
-		}		
+		}catch (SQLException | AppDataException e) {
+			throw new AppDataException(e,"No es posible recuperar los tipo de elementos de la BD");
+			
+		}finally{
+			try{
+				if(rs!=null) rs.close();
+				if(stmt!=null) stmt.close();
+				FactoryConexion.getInstancia().releaseConn();
+			}catch (SQLException e) {
+				e.printStackTrace();	
+			}
+		} 	
 		return tipoelementos;		
 	}	
-
 }

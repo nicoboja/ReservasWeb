@@ -18,16 +18,17 @@ public class DataElemento {
 			stmt.setString(2, elem.getNombre());
 			stmt.setString(3, elem.getDescrip());
 			stmt.executeUpdate();	
+		
+		}catch (SQLException | AppDataException e) {
+			throw new AppDataException(e,"No es posible agregar elemento a la BD");
 			
-		}catch (SQLException e) {
-				throw new AppDataException(e,"No es posible agregar un elemento en la BD");	
-			
-		}catch (AppDataException e){
-			throw e;
-		}
-		finally{
-			FactoryConexion.getInstancia().releaseConn();
-		}			
+		}finally{
+			try{
+				FactoryConexion.getInstancia().releaseConn();
+			}catch (SQLException e) {
+				e.printStackTrace();	
+			}
+		} 		
 	}
 	
 	public void delete(Elemento elem) throws Exception {
@@ -38,15 +39,16 @@ public class DataElemento {
 			stmt.setInt(1, elem.getId());
 			stmt.executeUpdate();		
 		
-		}catch (SQLException e) {
-			throw new AppDataException(e,"No es posible eliminar el elemento en la BD");
-	
-		}catch (AppDataException e){
-			throw e;
-	
+		}catch (SQLException | AppDataException e) {
+			throw new AppDataException(e,"No es posible borrar elemento en la BD");
+			
 		}finally{
-			FactoryConexion.getInstancia().releaseConn();
-		}		
+			try{
+				FactoryConexion.getInstancia().releaseConn();
+			}catch (SQLException e) {
+				e.printStackTrace();	
+			}
+		} 		
 	}
 	
 	
@@ -67,24 +69,20 @@ public class DataElemento {
 					elemento.setNombre(rs.getString("nombre"));
 					elemento.setDescrip(rs.getString("descripcion"));
 					elemento.getTipoElem().setDescripcion(rs.getString("descripcion"));
-					elemento.getTipoElem().setIdT(rs.getInt("idT"));				
-					
+					elemento.getTipoElem().setIdT(rs.getInt("idT"));						
 			}
-		}catch (SQLException e) {
-			throw new AppDataException(e,"No es posible recuperar el elemento de la BD");
-	
-		}catch (AppDataException e){
-			throw e;
-		
-		} finally{
-			try {
+		}catch (SQLException | AppDataException e) {
+			throw new AppDataException(e,"No es posible recuperar elemento de la BD");
+			
+		}finally{
+			try{
 				if(rs!=null)rs.close();
 				if(stmt!=null)stmt.close();
 				FactoryConexion.getInstancia().releaseConn();
-			} catch (SQLException e) {
-				throw e;
+			}catch (SQLException e) {
+				e.printStackTrace();	
 			}
-		}
+		} 	
 		return elemento;
 	}
 	
@@ -109,20 +107,18 @@ public class DataElemento {
 					elementos.add(elem);
 				}
 			}
-		}catch (SQLException e) {
-			throw new AppDataException(e,"No es posible recuperar elementos de la BD");
-	
-		}catch (AppDataException e){
-			throw e;
-		
-		}try {
-			if(rs!=null) rs.close();
-			if(stmt!=null) stmt.close();
-			FactoryConexion.getInstancia().releaseConn();
-		
-		} catch (SQLException e) {
-			throw e;
-		}		
+		}catch (SQLException | AppDataException e) {
+			throw new AppDataException(e,"No es posible recuperar los elementos de la BD");
+			
+		}finally{
+			try{
+				if(rs!=null)rs.close();
+				if(stmt!=null)stmt.close();
+				FactoryConexion.getInstancia().releaseConn();
+			}catch (SQLException e) {
+				e.printStackTrace();	
+			}
+		} 	
 		return elementos;		
 	}	
 
@@ -136,14 +132,15 @@ public class DataElemento {
 			stmt.setInt(3, elem.getId());
 			stmt.executeUpdate();		
 			
-		}catch (SQLException e) {
+		}catch (SQLException | AppDataException e) {
 			throw new AppDataException(e,"No es posible actualizar elemento en la BD");
-	
-		}catch (AppDataException e){
-			throw e;
 			
 		}finally{
-			FactoryConexion.getInstancia().releaseConn();
-		}		
+			try{
+				FactoryConexion.getInstancia().releaseConn();
+			}catch (SQLException e) {
+				e.printStackTrace();	
+			}
+		} 	
 	}
 }

@@ -27,16 +27,20 @@ public class DataReserva {
 			stmt.setString(7, r.getEstado());
 			stmt.executeUpdate();
 		
-		}catch (SQLException e) {
-			throw new AppDataException(e,"No es posible agregar reserva en la BD");	
-		
+		}catch (SQLException | AppDataException e) {
+			throw new AppDataException(e,"No es posible agregar reserva a la BD");
+			
 		}finally{
-		FactoryConexion.getInstancia().releaseConn();
-		}		
+			try{
+				FactoryConexion.getInstancia().releaseConn();
+			}catch (SQLException e) {
+				e.printStackTrace();	
+			}
+		} 	
 	}
 
 	public ArrayList<Reserva> getById(int idPers) throws Exception {
-		System.out.println("DATOS ARRAY RESERVA");
+		System.out.println("dataReserva!");
 		PreparedStatement stmt=null;
 		ResultSet rs=null;
 		Reserva r=null;
@@ -60,19 +64,18 @@ public class DataReserva {
 					revs.add(r);
 				}
 			}
-		}catch (SQLException  | AppDataException e) {
-			e.printStackTrace();
-			throw new AppDataException(e,"No es posible recuperar reservas de la persona de la BD");
+		}catch (SQLException | AppDataException e) {
+			throw new AppDataException(e,"No es posible recuperar Reservas de la BD");
 			
-		} finally{
-			try {
-				if(rs!=null)rs.close();
-				if(stmt!=null)stmt.close();
+		}finally{
+			try{
+				if(rs!=null) rs.close();
+				if(stmt!=null) stmt.close();
 				FactoryConexion.getInstancia().releaseConn();
-			} catch (SQLException e) {
-				e.printStackTrace();
+			}catch (SQLException e) {
+				e.printStackTrace();	
 			}
-		}
+		} 
 		return revs;
 	}
 
@@ -84,12 +87,16 @@ public class DataReserva {
 			stmt.setInt(1, r.getId());			
 			stmt.executeUpdate();		
 			
-		}catch (SQLException e) {
+		}catch (SQLException | AppDataException e) {
 			throw new AppDataException(e,"No es posible cancelar reserva en la BD");
-	
+			
 		}finally{
-			FactoryConexion.getInstancia().releaseConn();
-		}		
+			try{
+				FactoryConexion.getInstancia().releaseConn();
+			}catch (SQLException e) {
+				e.printStackTrace();	
+			}
+		} 	
 	}
 	
 	public int getTotalByTipo(Reserva r) throws Exception{
@@ -108,21 +115,18 @@ public class DataReserva {
 					cant = rs.getInt("cant");
 				}	
 			}
-		} catch (SQLException e) {
-			throw new AppDataException(e,"No es posible obtener las reserva");	
+		}catch (SQLException | AppDataException e) {
+			throw new AppDataException(e,"No es posible recuperar reservas de la BD");
 			
-		} catch (Exception e) {
-			throw e;
-		
 		}finally{
-			try {
-				if(rs!=null)rs.close();
-				if(stmt!=null)stmt.close();
+			try{
+				if(rs!=null) rs.close();
+				if(stmt!=null) stmt.close();
 				FactoryConexion.getInstancia().releaseConn();
-			} catch (SQLException e) {
-				throw e;
-			}		
-		}
+			}catch (SQLException e) {
+				e.printStackTrace();	
+			}
+		} 
 		return cant;
 	}
 	
@@ -139,18 +143,18 @@ public class DataReserva {
 					fecActual=(rs.getDate("CURDATE()"));
 				}
 			}				
-		}catch (SQLException e) {
+		}catch (SQLException | AppDataException e) {
 			throw new AppDataException(e,"No es posible recuperar fecha de la BD");
-	
-		} finally{
-			try {
-				if(rs!=null)rs.close();
-				if(stmt!=null)stmt.close();
+			
+		}finally{
+			try{
+				if(rs!=null) rs.close();
+				if(stmt!=null) stmt.close();
 				FactoryConexion.getInstancia().releaseConn();
-			} catch (SQLException e) {
-				throw e;
+			}catch (SQLException e) {
+				e.printStackTrace();	
 			}
-		}		
+		} 		
 		return fecActual;
 	}
 	
