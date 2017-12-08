@@ -8,6 +8,8 @@ public class TipoElemento {
 	private int cantMax;
 	
 	
+	
+	
 	public int getIdT() {
 		return idT;
 	}
