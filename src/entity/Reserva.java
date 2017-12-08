@@ -5,7 +5,7 @@ import java.sql.Time;
 
 public class Reserva {
 	private int id;
-	private java.sql.Date fecha;//= new SimpleDateFormat("dd/MM/yyyy HH:mm");
+	private java.sql.Date fecha;
 	private java.sql.Time hora;
 	private String detalle;
 	private Elemento elem;

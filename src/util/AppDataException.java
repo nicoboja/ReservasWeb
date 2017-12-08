@@ -20,4 +20,9 @@ public class AppDataException extends Exception{
 		this.setMessage(message);
 	}
 
+
+	public AppDataException(String e) {
+		// TODO Auto-generated constructor stub
+	}
+
 }

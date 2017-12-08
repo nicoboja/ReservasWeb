@@ -95,6 +95,7 @@ public class DataElemento {
 					elem.setId(rs.getInt("idE"));
 					elem.setNombre(rs.getString("nombre"));
 					elem.setDescrip(rs.getString("descripcion"));
+					elem.setTipoElem(tipo);
 					elementos.add(elem);
 				}
 			}

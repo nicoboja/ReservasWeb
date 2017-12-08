@@ -10,6 +10,8 @@ import entity.TipoElemento;
 
 public class DataTipoElemento {
 	
+	public int getCantMax;
+
 	public TipoElemento getByNombre(TipoElemento te) throws Exception{
 		
 		TipoElemento tipoElem=new TipoElemento();
