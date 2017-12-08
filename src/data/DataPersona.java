@@ -59,14 +59,16 @@ public class DataPersona {
 		PreparedStatement stmt=null;
 		try{
 			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
-					"update persona set dni=?,nombre=?, apellido=?,habilitado=?, idC=? where idP=?;");
+					"update persona set dni=?, nombre=?, apellido=?, habilitado=?, idC=?, usuario=?, contra=? where idP=?;");
 			stmt.setString(1, p.getDni());
 			stmt.setString(2, p.getNombre());
 			stmt.setString(3, p.getApellido());
 			stmt.setBoolean(4, p.isHabilitado());
 			stmt.setInt(5, p.getCategoria().getId());
-			stmt.setInt(6, p.getId());
-			stmt.execute();		
+			stmt.setString(6, p.getUss());
+			stmt.setString(7, p.getPass());
+			stmt.setInt(8, p.getId());
+			stmt.executeUpdate();		
 		
 		}catch (SQLException | AppDataException e) {
 			throw new AppDataException(e,"No es posible modificar la persona en la BD");
@@ -124,7 +126,7 @@ public class DataPersona {
 		ResultSet rs=null;
 		try {
 			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
-					"select p.idP, nombre, apellido, dni, habilitado, p.idC, nivel from persona p inner join categoria c on p.idC=c.idC where dni=?");
+					"select p.idP, nombre, apellido, dni, habilitado, p.idC, nivel, usuario from persona p inner join categoria c on p.idC=c.idC where dni=?");
 			stmt.setString(1, per.getDni());
 			rs=stmt.executeQuery();
 			if(rs!=null && rs.next()){
@@ -137,6 +139,7 @@ public class DataPersona {
 					p.setHabilitado(rs.getBoolean("habilitado"));
 					p.getCategoria().setId(rs.getInt("idC"));
 					p.getCategoria().setDescripcion(rs.getString("nivel"));
+					p.setUss(rs.getString("usuario"));
 			}
 		}catch (SQLException | AppDataException e) {
 			throw new AppDataException(e,"No es posible recuperar la persona de la BD");

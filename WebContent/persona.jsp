@@ -62,7 +62,7 @@
                           	<label>Estado</label>
                             	<div class="checkbox">
                                    <label>
-                                     <input type="checkbox" value="true" name="habilitado" id="habilitado" <% if(((Persona)request.getAttribute("existedni")).isHabilitado()){%> checked<%} %>>Habilitado
+                                     <input type="checkbox" id="habilita" name="habilita" value="true" <% if(((Persona)request.getAttribute("existedni")).isHabilitado()){%> checked<%} %>>Habilitado
                                    </label>
                                 </div>
                                 </div>
@@ -70,7 +70,7 @@
                     <div class="col-lg-6">
                 		<div class="form-group">
                           <label>Usuario</label>
-                          	<input class="form-control" type="text" name="usuario" id="usuario" value="<%=((Persona)request.getAttribute("existedni")).getUss()%>" >
+                          	<input class="form-control" type="text" name="uss" id="uss" value="<%=((Persona)request.getAttribute("existedni")).getUss()%>" >
                         </div>
                         <div class="form-group">
                           <label>Contraseña</label>
@@ -120,7 +120,7 @@
                           	<label>Estado</label>
                             	<div class="checkbox" >
                                    <label>
-                                     <input class="form-control" type="checkbox" id="habilita" name="habilita" value="true" checked>Habilitado
+                                     <input type="checkbox" id="habilita" name="habilita" value="true" checked>Habilitado
                                    </label>
                                 </div>
                                 </div>
@@ -188,7 +188,7 @@
                 <div class="col-lg-6">
                 	<div class="form-group">
                     <label>Usuario</label>
-                    <input class="form-control" type="text" name="usuario" id="usuario" disabled="">
+                    <input class="form-control" type="text" name="uss" id="uss" disabled="">
                   </div>
 
                   <div class="form-group">
@@ -244,7 +244,10 @@
            		%>
            		<form class="form-persona" name="dni" action="Persona" method="get">
            		<input class="form-control" type="number"  name="dni" id="dni" hidden value="<%=p.getDni()%>" >
-            			<tr> 
+            			<tr <% if(!p.isHabilitado()){%>
+            				class="danger"
+            				
+            			<% }else{%>class="success"<%} %>> 
             				<th scope="row"><%=p.getDni()%></th> 
             				<td><%=p.getUss()%></td> 
             				<td><%=p.getNombre()%></td> 

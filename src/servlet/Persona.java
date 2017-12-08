@@ -106,10 +106,13 @@ public class Persona extends HttpServlet {
 					perform.setNombre(request.getParameter("nombre"));
 					perform.setApellido(request.getParameter("apellido"));
 					perform.setUss(request.getParameter("uss"));
+					System.out.println(request.getParameter("uss"));
 					perform.setPass(request.getParameter("pass"));
-					
-					if (request.getParameter("habilita").equals("true")) {
-						perform.setHabilitado(true);
+					System.out.println(request.getParameter("habilita"));
+					if (request.getParameter("habilita")!=null) {
+						if (request.getParameter("habilita").equals("true")) {
+							perform.setHabilitado(true);
+						}
 					}else{
 						perform.setHabilitado(false);
 					}
