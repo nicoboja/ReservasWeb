@@ -26,17 +26,14 @@ public class CtrlABMElemento {
 			dataElem.add(elem);
 		}
 		catch (Exception e){
-			throw new AppDataException(e,"elemento");
+			throw new AppDataException(e,"al agregar elemento");
 		}
 	}
 	
 	public void delete(Elemento elem) throws Exception{
-		try {
+		
 			dataElem.delete(elem);
-		}
-		catch (Exception e) {
-			throw new AppDataException(e,"elemento");
-		}
+		
 	}
 	public void update(Elemento elem) throws Exception{
 		if(elem.getNombre().length()!=0){ 
@@ -44,10 +41,10 @@ public class CtrlABMElemento {
 				dataElem.update(elem);		
 				}
 			catch (Exception e){
-				throw new AppDataException(e,"elemento");
+				throw new AppDataException(e,"al actualizar elemento");
 			}
 		}else{
-			throw new Exception("nombre");
+			throw new Exception("elemento vacio");
 		}					
 	}	
 	
@@ -58,5 +55,6 @@ public class CtrlABMElemento {
 	public Elemento getByNombre(Elemento e) throws Exception{
 		return this.dataElem.getByNombre(e);		
 	}
-	
+
+
 }

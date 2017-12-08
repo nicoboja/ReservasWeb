@@ -73,8 +73,11 @@ public class EliminaElemento extends HttpServlet {
 				int idE = Integer.parseInt(request.getParameter("idE"));
 				
 				String nom = request.getParameter("nom");
+				
 				CtrlABMElemento ctrlElem = new CtrlABMElemento();
-				Elemento e = new Elemento(idE);
+				Elemento e = new Elemento();
+				e.setId(idE);
+				System.out.println("SERVLET ID E: "+e.getId());
 				ctrlElem.delete(e);
 				
 				request.setAttribute("aviso", "Se elimino el elemento: <b>"+nom+"</b>");
@@ -88,7 +91,6 @@ public class EliminaElemento extends HttpServlet {
 		} catch (AppDataException e) {
 			request.setAttribute("aviso", "Error: "+e);
 		} catch (Exception e) {
-			
 			e.printStackTrace();
 		}
 		RequestDispatcher dispatcher =  getServletContext().getRequestDispatcher(pagina);

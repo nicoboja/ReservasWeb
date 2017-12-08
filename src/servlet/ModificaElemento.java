@@ -73,7 +73,8 @@ public class ModificaElemento extends HttpServlet {
 				String nom = request.getParameter("nom");
 				String desc = request.getParameter("desc");
 				CtrlABMElemento ctrlElem = new CtrlABMElemento();
-				Elemento e = new Elemento(idE);
+				Elemento e = new Elemento();
+				e.setId(idE);
 				e.setDescrip(desc);
 				e.setNombre(nom);
 				
