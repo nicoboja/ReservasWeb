@@ -15,9 +15,11 @@ public class DataTipoElemento {
 		PreparedStatement stmt=null;
 		try{			
 			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
-					"insert into tipoelemento (descripcion, tmax) values (?,?)");
+					"insert into tipoelemento (descripcion, maxPend, diasant) values (?,?,?)");
 			stmt.setString(1, te.getDescripcion());
 			stmt.setInt(2, te.getCantMax());
+			stmt.setInt(3, te.getDiasMaxAnt());
+			
 			stmt.executeUpdate();
 			
 		}catch (SQLException | AppDataException e) {
@@ -118,7 +120,7 @@ public class DataTipoElemento {
 		PreparedStatement stmt=null;
 		try{
 			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
-					"update tipoelemento set descripcion=?,  diasant=?, tmax=? where idT=?");
+					"update tipoelemento set descripcion=?,  diasant=?, maxPend=? where idT=?");
 			stmt.setString(1, te.getDescripcion());
 			stmt.setInt(2, te.getDiasMaxAnt());
 			stmt.setInt(3, te.getCantMax());
@@ -167,6 +169,7 @@ public class DataTipoElemento {
 				e.printStackTrace();	
 			}
 		} 	
+		System.out.println("BD");
 		return tipoelementos;		
 	}	
 }

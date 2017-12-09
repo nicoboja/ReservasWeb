@@ -1,4 +1,5 @@
 <%@page import="entity.TipoElemento"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -27,24 +28,48 @@
                    <!--Form-->
                   
                         <div class="col-lg-12">
-                        <%if(session.getAttribute("aviso")!=null){%>
+                        <%if(request.getAttribute("aviso")!=null){%>
     						<div class="alert alert-info">
         					<button type="button" class="close" data-dismiss="info" aria-hidden="true"></button>
           
-                               <%=session.getAttribute("aviso")%>
+                               <%=request.getAttribute("aviso")%>
        						 </div> 
     					<%}%>
-                          <form class="form-persona" name="idTipo" action="TipoElementos" method="get">
-                        	 	<label>Buscar ID</label>
-        	           		    <div class="input-group">
-                       		 		<input class="form-control input-sm" type="number"  name="idTipo" id="iTipo" autofocus>
-                           			<span class="input-group-btn">
-                           			  <button type="submit" class="btn btn-info btn-sm">Buscar</button>	
-                           			</span>
-                          </form>
+    					 <form class="form-persona" name="idTipo" action="TipoElementos" method="get">
+    					<div class="col-lg-6">
+    						<div class="form-group">
+                        		<label>Tipo de elemento</label>
+                        		 <select id="idTipo" name="idTipo" class="form-control" >
+  								  									<%	
+  									ArrayList<entity.TipoElemento> tipoe = (ArrayList<entity.TipoElemento>)request.getAttribute("tipos");
+           							for(entity.TipoElemento t : tipoe){
+           							%>
+           							<option id="idTipo" name="idTipo" value="<%=t.getIdT()%>" <% if(request.getAttribute("nuevo")!=null){ %>disabled<%} %>><%=t.getDescripcion()%></option>
+           								<%} %>
+  									
+								</select>
+							</div>
+						</div>
+						<div class="col-lg-3">
+						<br>
+						<button type="submit" class="btn btn-info btn-sm">Seleccionar</button>	
+						</div>
+						</form>
+						
+						<div class="col-lg-1">
+						<br>
+						 <form class="form-persona" name="idTipo" action="TipoElementos" method="get">
+						<input class="form-control input-sm" type="text"  name="idTipo" id="idTipo" value="Nuevo" hidden>
+						<button type="submit" class="btn btn-success btn-sm">Nuevo</button>	
+						</form>
+						</div>
+						</div>
+                         
+                      
+                      
                         </div>
                     <br>
-                    <%if( session.getAttribute("tipo")==null && session.getAttribute("nuevo")==null){ %>	
+                    <%if( request.getAttribute("te")==null && request.getAttribute("nuevo")==null){ %>	
                         <div class="col-lg-6">
                         	<div class="form-group">
                         		<label>Id Tipo Elemento</label>
@@ -72,45 +97,45 @@
                   		<button class="btn btn-success btn-block" type="submit"  disabled>Guardar</button>
                   	<%} %>	
                   	
-                  	<%if(session.getAttribute("tipo")!=null && session.getAttribute("nuevo")==null){ %>	
+                  	<%if(request.getAttribute("modifica")!=null){ %>	
+                    	
                     	<form class="form-persona" name="idTipo" action="TipoElementos" method="post">
                         <div class="col-lg-6">
                         	<div class="form-group">
                         		<label>Id Tipo Elemento</label>
-                        		<input class="form-control input-sm" type="number"  name="i" id="i" disabled value="<%=((TipoElemento)session.getAttribute("tipo")).getIdT()%>">
-                        		<input class="form-control input-sm" type="number"  name="idTform" id="idTform" hidden value="<%=((TipoElemento)session.getAttribute("tipo")).getIdT() %>">
+                        		<input class="form-control input-sm" type="number"  name="i" id="i" disabled value="<%=((TipoElemento)request.getAttribute("tipo")).getIdT()%>">
+                        		<input class="form-control input-sm" type="number"  name="idTform" id="idTform" hidden value="<%=((TipoElemento)request.getAttribute("tipo")).getIdT() %>">
                         	</div>
                         </div>
                     	<div class="col-lg-6">
                    			<div class="form-group">
                    		 		<label>Descripción</label>
-                   				<input class="form-control" type="text"  name="descripcion" id="descripcion" value="<%=((TipoElemento)session.getAttribute("tipo")).getDescripcion()%>" >
+                   				<input class="form-control" type="text"  name="descripcion" id="descripcion" value="<%=((TipoElemento)request.getAttribute("tipo")).getDescripcion()%>" >
                   			</div>
                   		</div>
                   		<div class="col-lg-6">
                   			<div class="form-group">
                    		 		<label>Maximo Pendiente</label>
-                   				<input class="form-control" type="number"  name="max" id="max" value="<%=((TipoElemento)session.getAttribute("tipo")).getDiasMaxAnt()%>">
+                   				<input class="form-control" type="number"  name="max" id="max" value="<%=((TipoElemento)request.getAttribute("tipo")).getDiasMaxAnt()%>">
                   			</div>
                   		</div>
                   		<div class="col-lg-6">
                   			<div class="form-group">
                    		 		<label>Dias Previos</label>
-                   				<input class="form-control" type="number"  name="dias" id="dias" value="<%=((TipoElemento)session.getAttribute("tipo")).getDiasMaxAnt()%>" >
+                   				<input class="form-control" type="number"  name="dias" id="dias" value="<%=((TipoElemento)request.getAttribute("tipo")).getDiasMaxAnt()%>" >
                   			</div>
                   		</div>
                   		<button class="btn btn-warning btn-block" type="submit" >Modificar</button>
                   		</form>
                   		<%} %>
                   		
-                  		<%if(session.getAttribute("tipo")==null && session.getAttribute("nuevo")!=null){ %>	
-                    	<form class="form-persona" name="idTipo" action="Elemento" method="post">
+                  		<%if(request.getAttribute("nuevo")!=null){ %>	
+                    	<form class="form-persona" name="idTipo" action="TipoElementos" method="post">
                         <div class="col-lg-6">
                         	<div class="form-group">
                         		<label>Id Tipo Elemento</label>
                         		<input class="form-control input-sm" type="number"  name="i" id="i" disabled " >
-                        		<input class="form-control input-sm" type="number"  name="idTform" id="idTform" hidden value="<%=session.getAttribute("nuevo")%>">
-                        	</div>
+                        		</div>
                         </div>
                     	<div class="col-lg-6">
                    			<div class="form-group">
@@ -130,7 +155,7 @@
                    				<input class="form-control" type="number"  name="dias" id="dias" value="" >
                   			</div>
                   		</div>
-                  		<button class="btn btn-sussess btn-block" type="submit" >Nuevo</button>
+                  		<button class="btn btn-success btn-block" type="submit" >Nuevo</button>
                   		</form>
                   		<%} %>
                   		

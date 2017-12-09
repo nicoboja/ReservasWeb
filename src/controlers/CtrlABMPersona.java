@@ -23,31 +23,24 @@ public class CtrlABMPersona {
 	
 	public void add(Persona p) throws Exception {
 		if(p.getDni().length()!=0){
-			try{
-				dataPer.add(p);			}
-			catch (Exception e){
-				throw new AppDataException(e,"persona");
-			}
+			
+				dataPer.add(p);			
+			
 		}else{
 			throw new Exception("DNI erroneo");
 		}		
 	}
 	
 	public void delete(Persona p)throws Exception{
-		try{
+		
 			dataPer.remove(p);
-		}catch (Exception e) {
-			throw new AppDataException(e,"persona");
-		}				
+				
 	}
 	
 	public void update(Persona p)throws Exception{
 		if(p.getDni().length()!=0){
-			try{
-				dataPer.update(p);			}
-			catch (Exception e){
-				throw new AppDataException(e,"persona");
-			}
+			
+				dataPer.update(p);		
 		}else{
 			throw new Exception("DNI erroneo");
 		}	

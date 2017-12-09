@@ -79,6 +79,7 @@ public class NuevoElemento extends HttpServlet {
 					System.out.println("sesion iniciada");
 					CtrlABMTipoElemento ctrlTipo = new CtrlABMTipoElemento();
 					ArrayList<TipoElemento> tipos = ctrlTipo.getAll();
+					System.out.println(tipos);
 					request.setAttribute("tipos", tipos);
 					
 					CtrlABMElemento ctrlElem = new CtrlABMElemento();

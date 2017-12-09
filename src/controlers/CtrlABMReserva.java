@@ -22,11 +22,9 @@ public class CtrlABMReserva {
 		
 		if(fechaActual.before(r.getFecha())){
 			if(r.getElem().getTipoElem().getCantMax()>dataRes.getTotalByTipo(r)){
-				try {
+				
 					dataRes.add(r);
-				} catch (Exception e) {
-					throw new AppDataException(e,"Error al cargar la reserva en la BD");
-				}			
+							
 			}else{
 				String e="Supero la cantidad de reservas para el tipo de elemento";
 				throw new AppDataException(e);
@@ -42,12 +40,9 @@ public class CtrlABMReserva {
 		fechaActual=dataRes.getFecActual();
 		
 		if(fechaActual.before(r.getFecha())){
-			try {
+			
 				dataRes.cancelRes(r);
-			}
-			catch (Exception e) {
-				throw new AppDataException(e,"reserva");
-			}
+			
 		}else{
 			String e="No se puede cancelar una reserva con fecha anterior a la actual";
 			throw new AppDataException(e);

@@ -22,27 +22,20 @@ public class CtrlABMElemento {
 	}
 	
 	public void add(Elemento elem) throws Exception{
-		try{
+		
 			dataElem.add(elem);
-		}
-		catch (Exception e){
-			throw new AppDataException(e,"al agregar elemento");
-		}
 	}
 	
 	public void delete(Elemento elem) throws Exception{
 		
 			dataElem.delete(elem);
-		
 	}
+	
 	public void update(Elemento elem) throws Exception{
 		if(elem.getNombre().length()!=0){ 
-			try{
+			
 				dataElem.update(elem);		
-				}
-			catch (Exception e){
-				throw new AppDataException(e,"al actualizar elemento");
-			}
+				
 		}else{
 			throw new Exception("elemento vacio");
 		}					

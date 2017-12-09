@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -41,35 +42,38 @@ public class TipoElementos extends HttpServlet {
 		try {
 			if(session.getAttribute("usuario")!=null) {
 				System.out.println("sesion iniciada");
-				session.setAttribute("aviso",null);
+				
+				CtrlABMTipoElemento ctrlTipo = new CtrlABMTipoElemento();
+				ArrayList<TipoElemento> tipos = ctrlTipo.getAll();
+				request.setAttribute("tipos", tipos);
+				
+				
 				
 				if(request.getParameter("idTipo")!=null && !request.getParameter("idTipo").equals("0") && !request.getParameter("idTipo").equals("")){
+					System.out.println("ENTRO A LAS OPCIONES");
 					
-					CtrlABMTipoElemento ctrlElem = new CtrlABMTipoElemento();
-					int idTE = Integer.parseInt(request.getParameter("idTipo"));
-					System.out.println(idTE);
-					TipoElemento tipo = new TipoElemento();
-					
-					tipo = ctrlElem.getById(idTE);
-					System.out.println("TIPO: "+tipo.getDescripcion());
-				
-					if(tipo.getDescripcion()==null){
-						System.out.println("tiponulo - es nuevo");
-						session.setAttribute("tipo", null);
-						session.setAttribute("nuevo", request.getParameter("idTipo"));
-						}else{
-							session.setAttribute("tipo", tipo);
-						}
-				}else{
-					session.setAttribute("tipo", null);
-					session.setAttribute("nuevo", null);
+					if(request.getParameter("idTipo").equals("Nuevo")){
+						request.setAttribute("nuevo", "nuevo");
+						
+					}else{
+						int idTE = Integer.parseInt(request.getParameter("idTipo"));
+						System.out.println(idTE);
+						
+						TipoElemento tipo = new TipoElemento();
+						
+						tipo = ctrlTipo.getById(idTE);
+						session.setAttribute("te", tipo);
+						session.setAttribute("modfica", "modifica");
+						System.out.println("TIPO: "+tipo.getDescripcion());
+					}
+
 				}
 			}else{
 			pagina = "/login.jsp";
 			}
 		
 		} catch (Exception e) {
-			// TODO: handle exception
+			request.setAttribute("aviso", e);
 			
 		}
 		RequestDispatcher dispatcher =  getServletContext().getRequestDispatcher(pagina);
@@ -89,7 +93,7 @@ public class TipoElementos extends HttpServlet {
 		try {
 			if (session.getAttribute("usuario")!=null) {
 				System.out.println("sesion iniciada");
-				session.setAttribute("aviso",null);
+				
 				if(request.getParameter("idTform")!=null && !request.getParameter("idTform").equals("0") && !request.getParameter("idTform").equals("")){
 					CtrlABMTipoElemento ctrTE = new CtrlABMTipoElemento();
 					
@@ -112,32 +116,24 @@ public class TipoElementos extends HttpServlet {
 						System.out.println("NUEVO - agrega");
 						try {
 							ctrTE.add(tn);
-							session.setAttribute("tipo", null);
-							session.setAttribute("nuevo", null);
-							session.setAttribute("aviso", "Se ha agregado un nuevo tipo de elemento!");
+							request.setAttribute("aviso", "Se ha agregado el tipo de elemento:<b> "+tn.getDescripcion()+"</b>");
 							
 						} catch (Exception e) {
-							
-							session.setAttribute("aviso", "Error! al agregar nuevo tipo de elemento");
+							//request.setAttribute("aviso", "Error! al agregar nuevo tipo de elemento");
+							request.setAttribute("aviso", e);
 						}
 					}else{
 						System.out.println("EXISTE - modifica");
 						try {
 							tn.setIdT(idTE);
 							ctrTE.update(tn);
-							session.setAttribute("tipo", null);
-							session.setAttribute("nuevo", null);
-							session.setAttribute("aviso", "Se ha modificado el tipo de elemento!");
+							request.setAttribute("aviso", "Se ha modificado el tipo de elemento!");
 						} catch (Exception e) {
-							session.setAttribute("aviso", "Error! al modificar tipo de elemento");
+							request.setAttribute("aviso", e);
 					}
 				}	
 					
 				
-				}else{
-					session.setAttribute("tipo", null);
-					session.setAttribute("nuevo", null);
-					
 				}
 				
 			}else{
@@ -145,7 +141,7 @@ public class TipoElementos extends HttpServlet {
 			}
 			
 		} catch (Exception e) {
-			// TODO: handle exception
+			request.setAttribute("aviso", e);
 		}finally {
 			RequestDispatcher dispatcher =  getServletContext().getRequestDispatcher(pagina);
 			dispatcher.forward(request, response); 

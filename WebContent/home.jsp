@@ -35,7 +35,8 @@
             				 <th>ID</th>
             				 <th>Fecha</th> 
             				 <th>Hora</th> 
-            				 <th>Elemento</th> 
+            				 <th>Elemento</th>
+            				 <th>Descripcion</th> 
             				 <th>Estado</th>
             				 <th></th>
             			</tr>
@@ -50,19 +51,18 @@
             				<th scope="row"><%=r.getId()%></th> 
             				<td><%=r.getFecha()%></td> 
             				<td><%=r.getHora()%></td> 
-            				<td ><%=r.getHora()%></td>
+            				<td ><%=r.getElem().getNombre()%></td>
+            				<td ><%=r.getElem().getDescrip()%></td>
             				<td><%=r.getEstado() %></td>
             				<td><%if(!r.getEstado().equals("Cancelado")){%>
-            				<button type="button" class="btn btn-outline btn-warning btn-xs">Cancelar</button>
+            			
             				<%}%></td>
             			</tr> 
 					<%} %>
 					</tbody> 
             		</table>
 			</div>
-            <div class="card-footer">
-              <a href="#" class="btn btn-success btn-block">Modificar Reservas</a>
-            </div>
+          
           </div>
         </div>
         <div class="col-lg-4 mb-4">
@@ -76,9 +76,7 @@
   					<li>DNI: <%=((Persona)session.getAttribute("usuario")).getDni()%></li>
   				</ul> 
             </div>
-            <div class="card-footer">
-              <a href="#" class="btn btn-warning btn-block ">Modificar</a>
-            </div>
+           
           </div>
         </div>
      </div>

@@ -13,12 +13,7 @@ public class CtrlABMTipoElemento {
 	public void add(TipoElemento te) throws Exception{
 		if (te.getDescripcion().length() != 0){
 			if (te.getCantMax() >= 0){	
-				try{
 					dataTipo.add(te);				
-				
-				}catch (Exception e){
-					throw new AppDataException(e,"tipo de elemento");								
-				}
 			}else{
 				throw new AppDataException("Maximo pendiente erroneo");
 			}
@@ -28,22 +23,16 @@ public class CtrlABMTipoElemento {
 	}
 	
 	public void delete(TipoElemento te) throws Exception{
-		try {
+		
 			dataTipo.delete(te);
-		} catch (Exception e) {
-			throw new AppDataException(e,"tipo de elemento");
-		}	
+			
 	}	
 	
 	public void update(TipoElemento te)throws Exception{
 		if (te.getDescripcion().length() != 0){
 			if (te.getCantMax() >= 0){	
-				try{
+				
 					dataTipo.update(te);
-					
-				}catch (Exception e){
-					throw new AppDataException(e,"tipo de elemento");								
-				}
 			}else{
 				throw new AppDataException("Maximo pendiente erroneo");
 			}
@@ -60,7 +49,9 @@ public class CtrlABMTipoElemento {
 	}
 	
 	public ArrayList<TipoElemento> getAll()throws Exception{
+		System.out.println("controlar");
 		return dataTipo.getAll();
+		
 	}
 	
 }

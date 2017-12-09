@@ -12,10 +12,15 @@
                 Persona
               </a>
             </li>
-            <li class="nav-item">
-              <a href="TipoElementos" class="nav-link">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Tipo Elemento
               </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
+                <a class="dropdown-item" href="NuevoTipoElemento">Nuevo Tipo Elemento</a>
+                <a class="dropdown-item" href="ModificaTipoElemento">Modifica Tipo Elemento</a>
+               
+              </div>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -29,14 +34,10 @@
             </li>
             
             
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPortfolio" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Reservas
+            <li class="nav-item">
+              <a href="Inicio" class="nav-link">
+               Reservas
               </a>
-              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
-                <a class="dropdown-item" href="#">Nueva Reserva</a>
-                <a class="dropdown-item" href="#">Reservas Pendientes</a>
-              </div>
             </li>
            
             <li class="nav-item">
