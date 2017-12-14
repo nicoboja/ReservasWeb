@@ -1,6 +1,9 @@
 package servlet;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -14,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import controlers.CtrlABMElemento;
 import controlers.CtrlABMTipoElemento;
 import entity.Elemento;
+import entity.Reserva;
 import entity.TipoElemento;
 
 /**
@@ -38,6 +42,7 @@ public class NuevaReserva extends HttpServlet {
 		System.out.println("Nueva Reserva (GET)");
 		String pagina = "/nueva_reserva.jsp";
 		HttpSession session = request.getSession();
+		
 		try {
 			if (session.getAttribute("usuario")!=null) {
 				System.out.println("sesion iniciada");
@@ -68,23 +73,37 @@ public class NuevaReserva extends HttpServlet {
 				
 				int hora = Integer.parseInt(request.getParameter("horaInicio"));
 				int cantHoras = Integer.parseInt(request.getParameter("cantHoras"));
+				
+				
 				if(hora+cantHoras<24){
-					//CtrlABMElemento ctrlElem = new CtrlABMElemento();
+					CtrlABMElemento ctrlElem = new CtrlABMElemento();
 					//CtrlABMTipoElemento ctrlTipo = new CtrlABMTipoElemento();
 					//Elemento elemento = new Elemento();
 					
+					Reserva res = new Reserva();
+					res.setCantHoras(cantHoras);
 					
 					
 					String fechaInicio = request.getParameter("fechaInicio");
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				    java.util.Date dateInicio = (Date) sdf.parse(fechaInicio);
+				    
+				    String h = request.getParameter("horaInico");
+				    
+				    DateFormat stf = new SimpleDateFormat("hh:mm:ss");
+				    java.util.Date horai = stf.parse(h);
+					
+				    res.setCantHoras(cantHoras);
+				    res.setFecha(dateInicio);
+					res.setHora(horai);
+					
+					
 					int idTipo = Integer.parseInt(request.getParameter("idTipo"));
 					
-					System.out.println("Fecha Inicio: "+fechaInicio+" ID"+idTipo);
+					ArrayList<Elemento> elementos = ctrlElem.getDisponibles(res, idTipo);
+					request.setAttribute("elementos", elementos);
 					
-					//
-					CtrlABMTipoElemento ctrlTipo = new CtrlABMTipoElemento();
-					ArrayList<TipoElemento> tipos = ctrlTipo.getAll();
-					System.out.println(tipos.get(1).getIdT());
-					request.setAttribute("tipos", tipos);
+					
 					
 				}else{
 					

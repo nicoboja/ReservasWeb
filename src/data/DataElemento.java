@@ -143,4 +143,45 @@ public class DataElemento {
 			}
 		} 	
 	}
+	
+	public ArrayList<Elemento> getDisponibles(Reserva r, int tipo) throws Exception{
+	PreparedStatement stmt=null;
+	ResultSet rs=null;
+	ArrayList<Elemento> elementos= new ArrayList<Elemento>();
+	try {
+		stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
+				"select * from elemento e inner join tipoelemento te on e.idT=te.idT where te.idT=? and"
+				+ " e.idE not in (select r.idElemento from reserva r inner join elemento e on r.idElemento=e.idE"
+				+ "where r.fecha='?' and r.estado='Pendiente' and "
+				+ "r.hora between '?' and '?:00:00' or (r.hora+10000*r.cantHoras) between '?' and '?:00:00'");
+		stmt.setInt(1, tipo);			
+		stmt.setDate(2, r.getFecha());			
+		stmt.setTime(3, r.getHora());
+		stmt.setInt(4, r.getCantHoras());
+		stmt.setTime(5, r.getHora());
+		stmt.setInt(6, r.getCantHoras());
+						
+		rs=stmt.executeQuery();		
+		if(rs!=null){
+			while(rs.next()){
+				Elemento elem=new Elemento();
+				elem.setId(rs.getInt("idE"));
+				elem.setNombre(rs.getString("nombre"));
+				elementos.add(elem);
+			}
+		}
+	}catch (SQLException | AppDataException e) {
+		throw new AppDataException(e,"No es posible recuperar elementos de la BD");
+	
+	}finally{ 
+		try {
+			if(rs!=null) rs.close();
+			if(stmt!=null) stmt.close();
+			FactoryConexion.getInstancia().releaseConn();
+		} catch (SQLException e) {			
+			e.printStackTrace();
+		}		
+	}
+	return elementos;		
+}	
 }

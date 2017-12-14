@@ -6,6 +6,7 @@ import data.DataElemento;
 import data.DataTipoElemento;
 import entity.Elemento;
 import entity.Persona;
+import entity.Reserva;
 import entity.TipoElemento;
 import util.AppDataException;
 
@@ -49,5 +50,8 @@ public class CtrlABMElemento {
 		return this.dataElem.getByNombre(e);		
 	}
 
+	public ArrayList<Elemento> getDisponibles(Reserva r, int tipo) throws Exception{
+		return dataElem.getDisponibles(r, tipo);
+	}
 
 }

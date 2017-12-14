@@ -44,14 +44,16 @@ public class Reserva {
 	public Date getFecha() {
 		return fecha;
 	}
-	public void setFecha(Date fecha) {
-		this.fecha = fecha;
+	public void setFecha(java.util.Date dateInicio) {
+		this.fecha = (Date) dateInicio;
+		System.out.println("LLEGO BIEN: "+fecha);
 	}
 	public Time getHora() {
 		return hora;
 	}
-	public void setHora(Time hora) {
-		this.hora = hora;
+	public void setHora(java.util.Date horai) {
+		this.hora = (Time) horai;
+		System.out.println("LLEGO BIEN: "+horai);
 	}
 	public int getId() {
 		return id;
