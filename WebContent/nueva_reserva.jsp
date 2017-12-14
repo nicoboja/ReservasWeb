@@ -9,24 +9,30 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <%@ include file="/meta.jsp" %>
 <title>Nueva Reserva</title>
+<script>
+$(function() {
+    $( "fechaInicio" ).datepicker({ maxDate: '+0d' });
+
+});
+</script>
 </head>
 <body>
 <%@ include file="/nav.jsp" %>
 <!-- Page Content -->
 <div class="container">
 	<!-- Page Heading/Breadcrumbs -->
-	<h2 class="mt-4 mb-3">Nueva <small>reserva</small></h2>
+	<h2 class="mt-4 mb-3">Nueva <small>Reserva</small></h2>
     <hr>
 </div>
 
 <div class="container">   
 	<div class="row">
-	 <div class="col-lg-6">
+	 <div class="col-lg-8">
 			<div class="panel panel-default">
 	        <div class="panel-heading">Reservar Elemento</div>
            		 <div class="panel-body">
                   <div class="row">
-                  <form class="form-persona" name="nuevoElemento" action="NuevoElemento" method="post">
+                  <form class="form-persona" name="nuevaReserva" action="NuevaReserva" method="post">
                         <div class="col-lg-12">
                         <%if(request.getAttribute("aviso")!=null){%>
     						<div class="alert alert-info">
@@ -47,20 +53,38 @@
 						</select>
                         	</div>
                         </div>
-                    	<div class="col-lg-6">
+                    	<div class="col-lg-4">
                    			<div class="form-group">
-                   		 		<label>Nombre</label>
-                   				<input class="form-control" type="text"  name="nom_elem" id="nom_elem" value="" required="" >
+                   		 		<label>Fecha</label>
+                   				<input class="form-control" type="date"  name="fechaInicio" id="fechaInicio" value="" required="" >
                   			</div>
                   		</div>
-                  		<div class="col-lg-6">
+                  		<div class="col-lg-4">
                   			<div class="form-group">
-                   		 		<label>Descripción</label>
-                   				<input class="form-control" type="text"  name="desc" id="desc" value="" required="">
+                   		 		<label>Hora Inicio</label>
+                   				
+                  				<select id="horaInicio" name="horaInicio" class="form-control">
+                  				<%for(int i = 0; i<24;i++){%>
+                  				<option id="horaInicio" name="horaInicio" value="<%=i%>"><%=i%>:00:00</option>	
+                  				<%}%>
+                  				
+                  				</select>
                   			</div>
+                  		</div>
+                  		<div class="col-lg-4">
+                  			<div class="form-group">
+                   		 		<label>Cantidad de Horas</label>
+                   				<select id="cantHoras" name="cantHoras" class="form-control">
+                  				<%for(int i = 1; i<25;i++){%>
+                  				<option id="cantHoras" name="cantHoras" value="<%=i%>"><%=i%> Horas</option>	
+                  				<%}%>
+                  				
+                  				</select>
+                   				
+                   			</div>
                   		</div>
                   		<div class="col-lg-12">
-                  		<button class="btn btn-success btn-block" type="submit" >Nuevo</button>
+                  		<button class="btn btn-info btn-block" type="submit" >Siguiente</button>
                   		</div>
                   		</form>
                         </div>
