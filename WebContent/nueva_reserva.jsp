@@ -29,7 +29,7 @@ $(function() {
 	<div class="row">
 	 <div class="col-lg-8">
 			<div class="panel panel-default">
-	        <div class="panel-heading">Reservar Elemento</div>
+	        <div class="panel-heading">Reservar Tipo de Elemento</div>
            		 <div class="panel-body">
                   <div class="row">
                   <form class="form-persona" name="nuevaReserva" action="NuevaReserva" method="post">

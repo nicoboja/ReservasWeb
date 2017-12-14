@@ -36,17 +36,8 @@ public class CtrlABMReserva {
 	}
 	
 	public void cancelRes(Reserva r) throws Exception {
-		java.sql.Date fechaActual=null;		
-		fechaActual=dataRes.getFecActual();
+		dataRes.cancelRes(r);
 		
-		if(fechaActual.before(r.getFecha())){
-			
-				dataRes.cancelRes(r);
-			
-		}else{
-			String e="No se puede cancelar una reserva con fecha anterior a la actual";
-			throw new AppDataException(e);
-		}
 	}
 	
 	public Reserva getById(Reserva r) throws Exception{

@@ -40,6 +40,7 @@
               </a>
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownPortfolio">
                 <a class="dropdown-item" href="NuevaReserva">Nuevo Reserva</a>
+                <a class="dropdown-item" href="CancelarReserva">Cancelar Reserva</a>
                
               </div>
             </li>

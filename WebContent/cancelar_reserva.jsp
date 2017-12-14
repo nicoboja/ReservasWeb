@@ -18,17 +18,26 @@
 <!-- Page Content -->
 <div class="container">
 <!-- Page Heading/Breadcrumbs -->
-      <h2 class="mt-4 mb-3">INICIO  |   
-        <small> Usuario: <%=((Persona)session.getAttribute("usuario")).getUss()%> </small>
+      <h2 class="mt-4 mb-3">Cancelar   
+        <small>Reservas</small>
       </h2>
     <hr>
 </div>
 <div class="container">   
 	<div class="row">
-        <div class="col-lg-8 mb-8">
-          <div class="card h-100">
-            <h4 class="card-header">Reservas Pendientes</h4>
-            <div class="card-body">
+        <div class="col-lg-12 mb-12">
+          <div class="panel panel-default">
+	        <div class="panel-heading">Cancelar Reserva</div>
+           		 <div class="panel-body">
+                  <div class="row">
+                  
+                  <%if(request.getAttribute("aviso")!=null){%>
+    						<div class="alert alert-info">
+        						<button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
+          
+                               <%=request.getAttribute("aviso") %>
+       						 </div> 
+    						<%}%>
              	<table class="table table-hover ">
             		<thead>
             			<tr>
@@ -48,6 +57,9 @@
             		<tr <%if(r.getEstado().equals("Cancelado")){%>
             				class="warning" 
             				<%}%>> 
+            				<form class="form" name="cancelarReserva" action="CancelarReserva" method="post">
+            				<input class="form-control" type="number"  name="idRes" id="idRes" value="<%=r.getId()%>" hidden>
+            				
             				<th scope="row"><%=r.getId()%></th> 
             				<td><%=r.getFecha()%></td> 
             				<td><%=r.getHora()%></td> 
@@ -55,8 +67,10 @@
             				<td ><%=r.getElem().getDescrip()%></td>
             				<td><%=r.getEstado() %></td>
             				<td><%if(!r.getEstado().equals("Cancelado")){%>
-            			
-            				<%}%></td>
+            				<button type="submit" class="btn btn-outline btn-warning btn-xs">Cancelar</button>
+            				</td>
+            				</form>
+            				<%}%>
             			</tr> 
 					<%} %>
 					</tbody> 
@@ -65,20 +79,7 @@
           
           </div>
         </div>
-        <div class="col-lg-4 mb-4">
-          <div class="card h-100">
-            <h4 class="card-header">Datos Personales</h4>
-            <div class="card-body">
-            	<ul>
-  					<li>Nombre: <%=((Persona)session.getAttribute("usuario")).getNombre()%></li>
-  					<li>Apellido: <%=((Persona)session.getAttribute("usuario")).getApellido()%></li>
-  					<li>Categoria: <%=((Persona)session.getAttribute("usuario")).getCategoria().getDescripcion()%></li>
-  					<li>DNI: <%=((Persona)session.getAttribute("usuario")).getDni()%></li>
-  				</ul> 
-            </div>
-           
-          </div>
-        </div>
+ </div>
      </div>
   </div>
 
