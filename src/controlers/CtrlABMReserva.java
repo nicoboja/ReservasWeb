@@ -16,6 +16,30 @@ public class CtrlABMReserva {
 	private DataTipoElemento dataTipo=new DataTipoElemento();
 	private DataElemento dataElem=new DataElemento();
 	
+	public ArrayList<Elemento> getDisponibles(int t, Reserva r) throws Exception{
+		ArrayList<Elemento> elemDisp=new ArrayList<Elemento>();
+		ArrayList<Reserva> res=new ArrayList<Reserva>();
+		res=dataRes.getByFecTipo(r.getFecha(), t);
+		int horaIni;
+		int horaFin;
+		horaIni=r.getHora().getHours();
+		horaFin=r.getHora().getHours()+r.getCantHoras();
+		System.out.println(horaFin);
+		elemDisp=dataElem.getByTipo(t);
+		for (int i=0; i<res.size();i++){
+		
+			if (horaIni<res.get(i).getHora().getHours() || res.get(i).getHora().getHours()<horaFin || 
+					horaIni<res.get(i).getHora().getHours()+res.get(i).getCantHoras() && 
+					res.get(i).getHora().getHours()+res.get(i).getCantHoras()<horaFin ){
+				
+				elemDisp.remove(res.get(i).getElem());
+				
+			}
+		}		
+		
+		return elemDisp;
+	}
+	
 	public void add(Reserva r) throws Exception{
 		java.sql.Date fechaActual=null;		
 		fechaActual=dataRes.getFecActual();

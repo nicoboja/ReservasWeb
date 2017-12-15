@@ -180,4 +180,35 @@ public class DataElemento {
 		return elementos;		
 	}
 	
+	public ArrayList<Elemento> getByTipo(int t) throws Exception{
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		ArrayList<Elemento> elementos= new ArrayList<Elemento>();
+		try {
+			stmt = FactoryConexion.getInstancia().getConn().prepareStatement(
+					"select * from elemento where idT=?");
+			stmt.setInt(1, t);
+			rs=stmt.executeQuery();
+			if(rs!=null){
+				while(rs.next()){
+					Elemento elem=new Elemento();
+					elem.setId(rs.getInt("idE"));
+					elem.setNombre(rs.getString("nombre"));
+					elementos.add(elem);
+				}
+			}
+		} catch (SQLException e) {			
+			throw e;
+		}
+		try {
+			if(rs!=null) rs.close();
+			if(stmt!=null) stmt.close();
+			FactoryConexion.getInstancia().releaseConn();
+		} catch (SQLException e) {			
+			throw e;
+		}	
+		System.out.println("Devolviendo elementos desde capa datos");
+		return elementos;		
+	}	
+	
 }

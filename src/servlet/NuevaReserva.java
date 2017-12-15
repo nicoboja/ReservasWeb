@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import controlers.CtrlABMElemento;
+import controlers.CtrlABMReserva;
 import controlers.CtrlABMTipoElemento;
 import entity.Elemento;
 import entity.Reserva;
@@ -99,8 +100,8 @@ public class NuevaReserva extends HttpServlet {
 					System.out.println("ID: "+idTipo+ " "+cantHoras+" "+fechaSql+" "+horaSql);
 					//
 					CtrlABMElemento ctrlElem = new CtrlABMElemento();
-					
-					ArrayList<Elemento> elementos = ctrlElem.getDisponibles(res, idTipo);
+					CtrlABMReserva ctrlRes = new CtrlABMReserva();
+					ArrayList<Elemento> elementos = ctrlRes.getDisponibles(idTipo, res);
 					if(elementos!=null){
 						request.setAttribute("elementos", elementos);
 						request.setAttribute("datosR", res);

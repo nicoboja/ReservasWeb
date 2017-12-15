@@ -163,6 +163,44 @@ public class DataReserva {
 		return null;
 	}
 
+	public ArrayList<Reserva> getByFecTipo(Date fecha, int t) {
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		Reserva r=null;
+		ArrayList<Reserva> res= new ArrayList<Reserva>();
+		try {
+			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
+					"select * from reserva r inner join elemento e r.idElemento=e.idE  "
+					+ "where fecha=? and e.idT=? and estado='Pendiente'");			
+			stmt.setDate(1, fecha);
+			stmt.setInt(2, t);
+			rs=stmt.executeQuery();
+			if(rs!=null){
+				while(rs.next()){					
+					r=new Reserva();				
+					r.setElem(new Elemento());
+					r.setId(rs.getInt("idR"));
+					r.setFecha(rs.getDate("fecha"));
+					r.setCantHoras(rs.getInt("cantHoras"));
+					r.setHora(rs.getTime("hora"));
+					r.getElem().setId(rs.getInt("idElemento"));
+					res.add(r);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally{
+			try {
+				if(rs!=null)rs.close();
+				if(stmt!=null)stmt.close();
+				FactoryConexion.getInstancia().releaseConn();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		System.out.println("enviando array getByFecha");
+		return res;
+	}
 
 
 }
