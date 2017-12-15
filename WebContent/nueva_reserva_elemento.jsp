@@ -21,62 +21,46 @@
 
 <div class="container">   
 	<div class="row">
-	 <div class="col-lg-8">
+	<div class="col-lg-6">
+                   			<div class="form-group">
+                   		 		<p><label>Fecha de Reserva:</label> 2017-12-12</p>
+                   		 		<p><label>Hora de Inicio: </label> 2017-12-12</p>
+                   		 		<p><label>Cantidad de Horas: </label> 2017-12-12</p>
+							</div>
+                  		</div>
+	 <div class="col-lg-10">
 			<div class="panel panel-default">
-	        <div class="panel-heading">Elegir Elemento a Reservar</div>
+			
+	        <div class="panel-heading">Elementos disponbles a Reservar</div>
            		 <div class="panel-body">
                   <div class="row">
-                  <form class="form-persona" name="nuevaReserva" action="NuevaReserva" method="post">
+                 
                         <div class="col-lg-12">
                         <%if(request.getAttribute("aviso")!=null){%>
     						<div class="alert alert-info">
         						<button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
-          
-                               <%=request.getAttribute("aviso") %>
+          						<%=request.getAttribute("aviso") %>
        						 </div> 
-    						<%}%>
+    					<%}%>
+    					 <form class="form-persona" name="nuevaReserva" action="NuevaReserva" method="post">
                         	<div class="form-group">
-                        		<label>Tipo de elemento</label>
-                        		 <select id="idTipo" name="idTipo" class="form-control">
-  						
-						</select>
+                        		<select id="idElemento" name="idElemento" multiple class="form-control">
+                        		 	<option>1</option>
+								 	 <option>2</option>
+									  <option>3</option>
+								 	 <option>4</option>
+									  <option>5</option>
+  								</select>
                         	</div>
                         </div>
                        
-                    	<div class="col-lg-4">
-                   			<div class="form-group">
-                   		 		<label>Fecha</label>
-                   				<input class="form-control" type="date"  name="fechaInicio" id="fechaInicio" value="" required="" >
-                  			</div>
-                  		</div>
-                  		<div class="col-lg-4">
-                  			<div class="form-group">
-                   		 		<label>Hora Inicio</label>
-                   				
-                  				<select id="horaInicio" name="horaInicio" class="form-control">
-                  				<%for(int i = 0; i<24;i++){%>
-                  				<option id="horaInicio" name="horaInicio" value="<%=i%>"><%=i%>:00:00</option>	
-                  				<%}%>
-                  				
-                  				</select>
-                  			</div>
-                  		</div>
-                  		<div class="col-lg-4">
-                  			<div class="form-group">
-                   		 		<label>Cantidad de Horas</label>
-                   				<select id="cantHoras" name="cantHoras" class="form-control">
-                  				<%for(int i = 1; i<25;i++){%>
-                  				<option id="cantHoras" name="cantHoras" value="<%=i%>"><%=i%> Horas</option>	
-                  				<%}%>
-                  				
-                  				</select>
-                   				
-                   			</div>
-                  		</div>
+                    	
+                  	
                   		<div class="col-lg-12">
                   		<button class="btn btn-info btn-block" type="submit" >Siguiente</button>
-                  		</div>
                   		</form>
+                  		</div>
+                  		
                         </div>
                     <br>
                    </div>
