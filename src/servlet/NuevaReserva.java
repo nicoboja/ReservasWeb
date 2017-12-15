@@ -1,11 +1,12 @@
 package servlet;
 
 import java.io.IOException;
-import java.sql.Date;
+import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import javax.print.PrintException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -76,41 +77,34 @@ public class NuevaReserva extends HttpServlet {
 				
 				
 				if(hora+cantHoras<24){
-					CtrlABMElemento ctrlElem = new CtrlABMElemento();
-					//CtrlABMTipoElemento ctrlTipo = new CtrlABMTipoElemento();
-					//Elemento elemento = new Elemento();
-					
-					Reserva res = new Reserva();
-					res.setCantHoras(cantHoras);
-					
-					
-					String fechaInicio = request.getParameter("fechaInicio");
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-				    java.util.Date dateInicio = (Date) sdf.parse(fechaInicio);
-				    
-				    String h = request.getParameter("horaInico");
-				    
-				    DateFormat stf = new SimpleDateFormat("hh:mm:ss");
-				    java.util.Date horai = stf.parse(h);
-					
+					String fechaString = request.getParameter("fechaInicio");
+					System.out.println(fechaString);
+					SimpleDateFormat formatFecha = new SimpleDateFormat("yyyy-MM-dd");
+					Date fechaUtil = formatFecha.parse(fechaString);
+					java.sql.Date fechaSql = new java.sql.Date(fechaUtil.getTime());
+					//
+					String horaString = "0"+hora+":00:00";
+					DateFormat formatHora = new SimpleDateFormat("hh:mm:ss");
+					Date horaUtil = formatHora.parse(horaString);
+				    java.sql.Time horaSql = new java.sql.Time(horaUtil.getTime());
+					//
+				    Reserva res = new Reserva();
 				    res.setCantHoras(cantHoras);
-				    res.setFecha(dateInicio);
-					res.setHora(horai);
-					
-					
+				    res.setFecha(fechaSql);
+					res.setHora(horaSql);
+					//
 					int idTipo = Integer.parseInt(request.getParameter("idTipo"));
-					
+					System.out.println("ID: "+idTipo+ " "+cantHoras+" "+fechaSql+" "+horaSql);
+					//
+					CtrlABMElemento ctrlElem = new CtrlABMElemento();
 					ArrayList<Elemento> elementos = ctrlElem.getDisponibles(res, idTipo);
 					request.setAttribute("elementos", elementos);
-					
-					
-					
+						
 				}else{
 					
 					System.out.println("sesion iniciada");
 					CtrlABMTipoElemento ctrlTipo = new CtrlABMTipoElemento();
 					ArrayList<TipoElemento> tipos = ctrlTipo.getAll();
-					System.out.println(tipos.get(1).getIdT());
 					request.setAttribute("tipos", tipos);
 					request.setAttribute("aviso", "Advertencia: La hora fin supera el dia de la fecha");
 					pagina = "/nueva_reserva.jsp";
@@ -121,6 +115,7 @@ public class NuevaReserva extends HttpServlet {
 			}
 			
 		} catch (Exception e) {
+			pagina = "/nueva_reserva_elemento.jsp";
 			request.setAttribute("aviso", "Error: "+e);
 		}
 		RequestDispatcher dispatcher =  getServletContext().getRequestDispatcher(pagina);

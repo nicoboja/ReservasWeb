@@ -171,7 +171,7 @@ public class DataElemento {
 			}
 		}
 	}catch (SQLException | AppDataException e) {
-		throw new AppDataException(e,"No es posible recuperar elementos de la BD");
+		throw new AppDataException(e,"No es posible recuperar Elementos de la Base de DATOS");
 	
 	}finally{ 
 		try {

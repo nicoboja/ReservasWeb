@@ -38,12 +38,7 @@
                         	<div class="form-group">
                         		<label>Tipo de elemento</label>
                         		 <select id="idTipo" name="idTipo" class="form-control">
-  									<%	
-  									ArrayList<TipoElemento> tipoe = (ArrayList<TipoElemento>)request.getAttribute("tipos");
-           							for(TipoElemento t : tipoe){
-           							%>
-           							<option id="idTipo" name="idTipo" value="<%=t.getIdT()%>"><%=t.getDescripcion()%></option>
-           								<%} %>
+  						
 						</select>
                         	</div>
                         </div>
