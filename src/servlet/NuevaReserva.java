@@ -56,7 +56,9 @@ public class NuevaReserva extends HttpServlet {
 			}
 			
 		} catch (Exception e) {
+			pagina = "/440.jsp";
 			request.setAttribute("aviso", "Error: "+e);
+			
 		}
 		RequestDispatcher dispatcher =  getServletContext().getRequestDispatcher(pagina);
 		dispatcher.forward(request, response); 
@@ -97,12 +99,23 @@ public class NuevaReserva extends HttpServlet {
 					System.out.println("ID: "+idTipo+ " "+cantHoras+" "+fechaSql+" "+horaSql);
 					//
 					CtrlABMElemento ctrlElem = new CtrlABMElemento();
+					
 					ArrayList<Elemento> elementos = ctrlElem.getDisponibles(res, idTipo);
-					request.setAttribute("elementos", elementos);
+					if(elementos!=null){
+						request.setAttribute("elementos", elementos);
+						request.setAttribute("datosR", res);
+						
+					}else{
+						CtrlABMTipoElemento ctrlTipo = new CtrlABMTipoElemento();
+						ArrayList<TipoElemento> tipos = ctrlTipo.getAll();
+						request.setAttribute("tipos", tipos);
+						request.setAttribute("aviso", "Advertencia: No existen elementos en disponibles");
+						pagina = "/nueva_reserva.jsp";
+					}
+					
 						
 				}else{
 					
-					System.out.println("sesion iniciada");
 					CtrlABMTipoElemento ctrlTipo = new CtrlABMTipoElemento();
 					ArrayList<TipoElemento> tipos = ctrlTipo.getAll();
 					request.setAttribute("tipos", tipos);
@@ -115,7 +128,7 @@ public class NuevaReserva extends HttpServlet {
 			}
 			
 		} catch (Exception e) {
-			pagina = "/nueva_reserva_elemento.jsp";
+			pagina = "/440.jsp";
 			request.setAttribute("aviso", "Error: "+e);
 		}
 		RequestDispatcher dispatcher =  getServletContext().getRequestDispatcher(pagina);

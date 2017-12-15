@@ -73,7 +73,8 @@ public class TipoElementos extends HttpServlet {
 			}
 		
 		} catch (Exception e) {
-			request.setAttribute("aviso", e);
+			pagina = "/440.jsp";
+			request.setAttribute("aviso", "Error: "+e);
 			
 		}
 		RequestDispatcher dispatcher =  getServletContext().getRequestDispatcher(pagina);
