@@ -27,19 +27,19 @@ public class CtrlABMReserva {
 		System.out.println(horaFin);
 		elemDisp=dataElem.getByTipo(t);
 		for (int i=0; i<res.size();i++){
+			int hIniRes;
+			int hFinRes;
+			hIniRes=res.get(i).getHora().getHours();
+			hFinRes=res.get(i).getHora().getHours()+res.get(i).getCantHoras();
 		
-			if (horaIni<res.get(i).getHora().getHours() || res.get(i).getHora().getHours()<horaFin || 
-					horaIni<res.get(i).getHora().getHours()+res.get(i).getCantHoras() && 
-					res.get(i).getHora().getHours()+res.get(i).getCantHoras()<horaFin ){
-				
+			if ((horaIni<hIniRes && hIniRes<horaFin) || (horaIni<hFinRes && hFinRes<horaFin)){
+								
 				elemDisp.remove(res.get(i).getElem());
 				
 			}
-		}		
-		
+		}				
 		return elemDisp;
 	}
-	
 	public void add(Reserva r) throws Exception{
 		java.sql.Date fechaActual=null;		
 		fechaActual=dataRes.getFecActual();

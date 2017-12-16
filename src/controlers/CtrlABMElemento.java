@@ -53,5 +53,9 @@ public class CtrlABMElemento {
 	public ArrayList<Elemento> getDisponibles(Reserva r, int tipo) throws Exception{
 		return dataElem.getDisponibles(r, tipo);
 	}
+	
+	public Elemento getByid(int idElem) throws Exception{
+		return this.dataElem.getById(idElem);		
+	}
 
 }

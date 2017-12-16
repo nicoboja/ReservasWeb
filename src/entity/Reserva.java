@@ -5,7 +5,7 @@ import java.sql.Time;
 
 public class Reserva {
 	private int id;
-	private java.sql.Date fecha;//= new SimpleDateFormat("dd/MM/yyyy HH:mm");
+	private java.sql.Date fecha;
 	private java.sql.Time hora;
 	private String detalle;
 	private Elemento elem;
@@ -14,6 +14,15 @@ public class Reserva {
 	private String estado;
 	
 	public Reserva(){};
+	public Reserva(Date fecha, Time hora, String detalle, Elemento elem, Persona per, int cantHoras, String estado) {
+		this.fecha = fecha;
+		this.hora = hora;
+		this.detalle = detalle;
+		this.elem = elem;
+		this.per = per;
+		this.cantHoras = cantHoras;
+		this.estado = estado;
+	}
 	
 	public Reserva(int id, Date fecha, Time hora, String detalle, Elemento elem, Persona per, int cantHoras, String estado) {
 		super();

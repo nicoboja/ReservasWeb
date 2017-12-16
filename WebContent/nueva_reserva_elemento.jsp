@@ -42,7 +42,7 @@
           						<%=request.getAttribute("aviso") %>
        						 </div> 
     					<%}%>
-    					 <form class="form-persona" name="nuevaReserva" action="NuevaReserva" method="post">
+    					 <form class="form-persona" name="nuevaReserva" action="ConfirmaReserva" method="post">
                         	<div class="form-group">
                         		<input type="hidden" name="fechaR" id="fechaR" value="<%=((Reserva)request.getAttribute("datosR")).getFecha() %>">
                         		<input type="hidden" name="horaI" id="horaI" value="<%=((Reserva)request.getAttribute("datosR")).getHora() %>">
@@ -62,7 +62,7 @@
   									ArrayList<Elemento> elem = (ArrayList<Elemento>)request.getAttribute("elementos");
            							for(Elemento e : elem){
            							%>
-                        		 	<option id="idE" name="idE" value="<%=e.getId()%>"><%=e.getNombre()%></option>
+                        		 	<option id="idE" name="idE" value="<%=e.getId()%>"><%=e.getNombre()%> - <%=e.getDescrip()%></option>
            							<%}}%>
 								 	 
   								</select>

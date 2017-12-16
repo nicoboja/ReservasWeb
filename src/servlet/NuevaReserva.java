@@ -69,7 +69,7 @@ public class NuevaReserva extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("Nueva Reserva");
+		System.out.println("Nueva Reserva SRVLET");
 		String pagina = "/nueva_reserva_elemento.jsp";
 		HttpSession session = request.getSession();
 		try {
@@ -86,7 +86,10 @@ public class NuevaReserva extends HttpServlet {
 					Date fechaUtil = formatFecha.parse(fechaString);
 					java.sql.Date fechaSql = new java.sql.Date(fechaUtil.getTime());
 					//
-					String horaString = "0"+hora+":00:00";
+					String horaString = hora+":00:00";
+					if(hora<9){
+						horaString = "0"+hora+":00:00";
+					}
 					DateFormat formatHora = new SimpleDateFormat("hh:mm:ss");
 					Date horaUtil = formatHora.parse(horaString);
 				    java.sql.Time horaSql = new java.sql.Time(horaUtil.getTime());

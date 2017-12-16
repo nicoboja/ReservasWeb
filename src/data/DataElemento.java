@@ -8,6 +8,40 @@ import entity.*;
 import util.AppDataException;
 
 public class DataElemento {
+	
+	public Elemento getById(int idElem) throws Exception{
+		Elemento elemento= null;		
+		PreparedStatement stmt=null;
+		ResultSet rs=null;
+		try {
+			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
+					"select * from elemento where nombre=?");
+			stmt.setInt(1, idElem);
+			rs=stmt.executeQuery();
+			if(rs!=null && rs.next()){
+					elemento =new Elemento();
+					elemento.setTipoElem(new TipoElemento());					
+					elemento.setId(rs.getInt("idE"));
+					elemento.setNombre(rs.getString("nombre"));
+					elemento.setDescrip(rs.getString("descripcion"));
+				//	elemento.getTipoElem().setDescripcion(rs.getString("descripcion"));
+				//	elemento.getTipoElem().setIdT(rs.getInt("idT"));						
+			}
+		}catch (SQLException | AppDataException e) {
+			throw new AppDataException(e,"No es posible recuperar elemento de la BD");
+			
+		}finally{
+			try{
+				if(rs!=null)rs.close();
+				if(stmt!=null)stmt.close();
+				FactoryConexion.getInstancia().releaseConn();
+			}catch (SQLException e) {
+				e.printStackTrace();	
+			}
+		} 	
+		return elemento;
+	}
+	
 
 	public void add(Elemento elem) throws Exception {
 		PreparedStatement stmt=null;
@@ -152,7 +186,7 @@ public class DataElemento {
 			String cant = r.getCantHoras()+":00:00";
 			System.out.println(r.getFecha());
 			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
-					"select e.idE, e.nombre from elemento e inner join tipoelemento te on e.idT=te.idT where te.idT=? ");
+					"select e.idE, e.nombre, e.descripcion from elemento e inner join tipoelemento te on e.idT=te.idT where te.idT=? ");
 			stmt.setInt(1, tipo);			
 			//stmt.setDate(2, r.getFecha());	
 							
@@ -162,6 +196,7 @@ public class DataElemento {
 					Elemento elem=new Elemento();
 					elem.setId(rs.getInt("e.idE"));
 					elem.setNombre(rs.getString("e.nombre"));
+					elem.setDescrip(rs.getString("e.descripcion"));
 					elementos.add(elem);
 				}
 			}
@@ -194,6 +229,7 @@ public class DataElemento {
 					Elemento elem=new Elemento();
 					elem.setId(rs.getInt("idE"));
 					elem.setNombre(rs.getString("nombre"));
+					elem.setDescrip(rs.getString("descripcion"));
 					elementos.add(elem);
 				}
 			}
