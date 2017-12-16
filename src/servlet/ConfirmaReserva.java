@@ -71,7 +71,8 @@ public class ConfirmaReserva extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("Confirma Reserva (POST)");
-		String pagina = "/440.jsp";
+		System.out.println(request.getParameter("idE"));
+		String pagina = "/home.jsp";
 		HttpSession session = request.getSession();
 		
 		try {
@@ -133,9 +134,9 @@ public class ConfirmaReserva extends HttpServlet {
 			}
 			
 		} catch (Exception e) {
-			//pagina = "/440.jsp";
-			//request.setAttribute("aviso", "Error: "+e);
-			e.printStackTrace();
+			pagina = "/440.jsp";
+			request.setAttribute("aviso", "Error: "+e);
+			
 		}
 		RequestDispatcher dispatcher =  getServletContext().getRequestDispatcher(pagina);
 		dispatcher.forward(request, response); 

@@ -170,8 +170,8 @@ public class DataReserva {
 		ArrayList<Reserva> res= new ArrayList<Reserva>();
 		try {
 			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
-					"select * from reserva r inner join elemento e r.idElemento=e.idE  "
-					+ "where fecha=? and e.idT=? and estado='Pendiente'");			
+					"select * from reserva r inner join elemento e on r.idElemento=e.idE  "
+					+ "where r.fecha=? and e.idT=? and r.estado='Pendiente'");			
 			stmt.setDate(1, fecha);
 			stmt.setInt(2, t);
 			rs=stmt.executeQuery();

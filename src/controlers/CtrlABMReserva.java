@@ -43,21 +43,17 @@ public class CtrlABMReserva {
 	public void add(Reserva r) throws Exception{
 		java.sql.Date fechaActual=null;		
 		fechaActual=dataRes.getFecActual();
-		
-		if(fechaActual.before(r.getFecha())){
-			if(r.getElem().getTipoElem().getCantMax()>dataRes.getTotalByTipo(r)){
+	
+	 	//if(r.getElem().getTipoElem().getCantMax()>dataRes.getTotalByTipo(r)){
 				
-					dataRes.add(r);
+				dataRes.add(r);
 							
-			}else{
-				String e="Supero la cantidad de reservas para el tipo de elemento";
-				throw new AppDataException(e);
-			}
-		}else{
-			String e="Se debe reservar en una fecha posterior a la actual";
-			throw new AppDataException(e);
-		}
+		//}else{
+		//	String e="Supero la cantidad de reservas para el tipo de elemento";
+		//	throw new AppDataException(e);
+		//}
 	}
+	
 	
 	public void cancelRes(Reserva r) throws Exception {
 		dataRes.cancelRes(r);

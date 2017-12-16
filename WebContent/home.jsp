@@ -25,6 +25,14 @@
 </div>
 <div class="container">   
 	<div class="row">
+	<div class="col-lg-12">
+                        <%if(request.getAttribute("aviso")!=null){%>
+    						<div class="alert alert-info">
+        						<button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
+          						<%=request.getAttribute("aviso") %>
+       						 </div> 
+    					<%}%>
+    					</div>
         <div class="col-lg-8 mb-8">
           <div class="card h-100">
             <h4 class="card-header">Reservas Pendientes</h4>

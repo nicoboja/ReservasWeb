@@ -15,7 +15,7 @@ public class DataElemento {
 		ResultSet rs=null;
 		try {
 			stmt=FactoryConexion.getInstancia().getConn().prepareStatement(
-					"select * from elemento where nombre=?");
+					"select * from elemento where idE=?");
 			stmt.setInt(1, idElem);
 			rs=stmt.executeQuery();
 			if(rs!=null && rs.next()){
